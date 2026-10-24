@@ -53,6 +53,65 @@
     100%{transform:translateY(-108vh) scale(1.15) rotate(200deg);opacity:0}
   }
 
+  /* ============ دکمه‌ی آهنگ ============ */
+  .music-btn{
+    position:fixed;
+    top:16px;
+    left:16px;
+    z-index:100;
+    width:46px;
+    height:46px;
+    border-radius:50%;
+    border:1px solid rgba(201,162,74,.55);
+    background:rgba(10,26,22,.78);
+    backdrop-filter:blur(8px);
+    -webkit-backdrop-filter:blur(8px);
+    color:var(--gold-l);
+    font-size:1.25rem;
+    font-family:inherit;
+    cursor:pointer;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    transition:background .25s,transform .2s,color .2s,box-shadow .25s;
+    box-shadow:0 4px 18px rgba(0,0,0,.45), 0 0 0 1px rgba(201,162,74,.15);
+    -webkit-tap-highlight-color:transparent;
+    user-select:none;
+  }
+  .music-btn.show{display:flex}
+  .music-btn:hover{background:rgba(201,162,74,.22);transform:scale(1.08)}
+  .music-btn:active{transform:scale(.94)}
+
+  .music-btn.playing{
+    animation:musicPulse 2.4s ease-in-out infinite;
+  }
+  @keyframes musicPulse{
+    0%,100%{
+      box-shadow:0 4px 18px rgba(0,0,0,.45), 0 0 0 0 rgba(201,162,74,.55);
+      color:var(--gold-l);
+    }
+    50%{
+      box-shadow:0 4px 18px rgba(0,0,0,.45), 0 0 0 10px rgba(201,162,74,0);
+      color:#f9ecc4;
+    }
+  }
+
+  .music-btn.muted{
+    color:rgba(243,224,166,.4);
+    border-color:rgba(201,162,74,.25);
+  }
+  .music-btn.muted .music-icon{
+    text-decoration:line-through;
+    text-decoration-thickness:2px;
+  }
+
+  .music-icon{
+    display:inline-block;
+    line-height:1;
+    font-size:1.15rem;
+    font-family:'Vazirmatn',sans-serif;
+  }
+
   /* ============ ضربان قلب ============ */
   @keyframes heartbeat{
     0%,100%{transform:translateY(-.02em) scale(1)}
@@ -670,7 +729,6 @@
     color:#a8894f;
   }
 
-  /* ✦ فوتر */
   .footer-note{
     margin:24px auto 0;
     font-family:'Amiri',serif;
@@ -700,6 +758,7 @@
     .date-cell.highlight .day-num{font-size:.76rem}
     .detail-item{padding:12px 6px}
     .admin-card{padding:30px 20px 26px}
+    .music-btn{width:42px;height:42px;top:12px;left:12px;font-size:1.05rem}
   }
 
   @media (prefers-reduced-motion:reduce){
@@ -710,6 +769,18 @@
 <body>
 
 <div class="sparkles" id="sparkles" aria-hidden="true"></div>
+
+<!-- =============================================
+     🎵 فایل آهنگ
+     - فایل را با نام music.mp3 در همان پوشه‌ی index.html بگذارید
+     - اگر نام دیگری دارد، فقط مقدار src را عوض کنید
+     ============================================= -->
+<audio id="bgMusic" src="music.mp3" loop preload="auto"></audio>
+
+<!-- دکمه‌ی قطع/وصل آهنگ -->
+<button class="music-btn" id="musicBtn" type="button" aria-label="قطع یا وصل صدا">
+  <span class="music-icon" id="musicIcon">♪</span>
+</button>
 
 <!-- ================== پنل ساخت لینک (مخفی) ================== -->
 <div class="admin" id="adminPanel">
@@ -736,6 +807,10 @@
       <a class="preview-link" id="previewLink" href="#" target="_blank" rel="noopener">↗ پیش‌نمایش دعوت‌نامه</a>
     </div>
 
+    <p class="admin-note">
+      لینک شامل یک امضای امنیتی است؛ اگر کسی نام را داخل آدرس عوض کند، دعوت‌نامه بدون نام نمایش داده می‌شود.<br>
+      <strong>آدرس این پنل را جایی امن ذخیره کنید.</strong>
+    </p>
   </div>
 </div>
 
@@ -867,7 +942,7 @@
               <span class="c-num">۰۹۱۵۳۶۱۷۰۸۱</span>
               <span class="c-name">کاویان‌پور</span>
             </a>
-            <a class="c-item" href="tel:+989155623886">
+            <a class="c-item" href="tel:+989016962413">
               <span class="c-num">۰۹۰۱۶۹۶۲۴۱۳</span>
               <span class="c-name">شخم‌گر</span>
             </a>
@@ -887,13 +962,13 @@
   'use strict';
 
   /* =========================================================
-     🔑 کلیدهای مخفی — این‌ها را قبل از آپلود حتماً عوض کنید
+     🔑 کلیدهای مخفی
      ========================================================= */
-  var ADMIN_KEY = 'mr_hassan2413';                     /* کلید ورود به پنل ادمین */
-  var SIGN_KEY  = 'hasan-melika-1405-wedding-secret';  /* کلید امضای لینک‌ها */
+  var ADMIN_KEY = 'mr_hassan2413';
+  var SIGN_KEY  = 'hasan-melika-1405-wedding-secret';
 
   /* =========================================================
-     ساخت امضا برای نام مهمان
+     ساخت امضا
      ========================================================= */
   function fnv1a(str, seed) {
     var h = seed >>> 0;
@@ -925,6 +1000,13 @@
 
   var isAdmin = ADMIN_KEY.length > 0 && adminKey === ADMIN_KEY;
 
+  /* عناصر آهنگ */
+  var bgMusic    = document.getElementById('bgMusic');
+  var musicBtn   = document.getElementById('musicBtn');
+  var musicIcon  = document.getElementById('musicIcon');
+  var userMuted  = false;
+  var musicStarted = false;
+
   if (isAdmin) {
     document.body.classList.add('admin-mode');
     document.title = 'ساخت دعوت‌نامه | حسن و ملیکا';
@@ -953,6 +1035,7 @@
 
     initInvitation();
     startSparkles();
+    initMusic();
   }
 
   /* =============================================
@@ -991,6 +1074,11 @@
       opened = true;
       document.body.classList.add('opened');
       setTimeout(function () { cover.style.display = 'none'; }, 1100);
+
+      /* شروع آهنگ هنگام باز شدن کارت (اگر قطع نشده باشد) */
+      if (!userMuted) {
+        playMusic();
+      }
     }
 
     cover.addEventListener('click', openCard);
@@ -1000,6 +1088,67 @@
         openCard();
       }
     });
+  }
+
+  /* =============================================
+     منطق آهنگ
+     ============================================= */
+  function initMusic() {
+    /* دکمه را روی صفحه دعوت‌نامه نشان بده */
+    musicBtn.classList.add('show');
+
+    /* تنظیم ولوم ملایم */
+    try { bgMusic.volume = 0.45; } catch (e) {}
+
+    /* همگام‌سازی آیکن با وضعیت پخش */
+    bgMusic.addEventListener('play',  updateMusicIcon);
+    bgMusic.addEventListener('pause', updateMusicIcon);
+    bgMusic.addEventListener('error', function () {
+      /* اگر فایل آهنگ پیدا نشد، دکمه رو مخفی کن */
+      musicBtn.style.display = 'none';
+    });
+
+    /* کلیک روی دکمه = قطع/وصل */
+    musicBtn.addEventListener('click', function (e) {
+      e.stopPropagation();
+
+      if (bgMusic.paused) {
+        userMuted = false;
+        playMusic();
+      } else {
+        userMuted = true;
+        bgMusic.pause();
+        updateMusicIcon();
+      }
+    });
+  }
+
+  function playMusic() {
+    if (!bgMusic) return;
+    var p = bgMusic.play();
+    if (p && typeof p.catch === 'function') {
+      p.catch(function () {
+        /* مرورگر اجازه نداد — بی‌صدا رد شو */
+      });
+    }
+    musicStarted = true;
+    updateMusicIcon();
+  }
+
+  function updateMusicIcon() {
+    var isPlaying = !bgMusic.paused && !bgMusic.ended;
+
+    if (isPlaying && !userMuted) {
+      musicIcon.textContent = '♪';
+      musicBtn.classList.add('playing');
+      musicBtn.classList.remove('muted');
+      musicBtn.setAttribute('aria-label', 'قطع صدا');
+    } else {
+      musicIcon.textContent = '♪';
+      musicBtn.classList.remove('playing');
+      musicBtn.classList.add('muted');
+      musicBtn.setAttribute('aria-label', 'وصل صدا');
+    }
   }
 
   /* =============================================
