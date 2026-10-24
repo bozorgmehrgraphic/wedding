@@ -507,6 +507,8 @@
     line-height:2.05;
     color:var(--ink-2);
     padding:0 6px;
+    margin:20px auto 0;
+    width:min(100%,400px);
   }
 
   .date-section{
@@ -622,15 +624,6 @@
     line-height:1.6;
   }
 
-  .eternal{
-    margin:20px auto 0;
-    font-family:'Amiri',serif;
-    font-weight:700;
-    color:var(--gold-d);
-    font-size:clamp(.95rem,4vw,1.1rem);
-    line-height:1.8;
-  }
-
   .contacts{
     margin-top:22px;
     padding-top:18px;
@@ -677,10 +670,15 @@
     color:#a8894f;
   }
 
+  /* ✦ فوتر */
   .footer-note{
-    margin-top:24px;
-    font-size:.78rem;
-    color:#b08d4d;
+    margin:24px auto 0;
+    font-family:'Amiri',serif;
+    font-weight:700;
+    color:var(--gold-d);
+    font-size:clamp(.95rem,4vw,1.1rem);
+    line-height:1.8;
+    letter-spacing:.2px;
   }
 
   @media (max-width:480px){
@@ -820,10 +818,6 @@
 
         <div class="orn small"><span></span><i>♥</i><span></span></div>
 
-        <p class="message">
-          بی‌صبرانه مشتاق دیدار شماییم؛ اما اگر افتخار همراهی‌تان را نخواهیم داشت، لطفاً ما را مطلع فرمایید.
-        </p>
-
         <div class="date-section">
           <p class="date-title">آذر ۱۴۰۵</p>
           <div class="date-row">
@@ -866,23 +860,25 @@
           </div>
         </div>
 
-        <p class="eternal">حضور شما این جشن را جاودانه می‌سازد</p>
+        <p class="message">
+          بی‌صبرانه مشتاق دیدار شماییم؛ اما اگر افتخار همراهی‌تان را نخواهیم داشت، لطفاً ما را مطلع فرمایید.
+        </p>
 
         <div class="contacts">
           <p class="c-title">هماهنگی و اطلاع‌رسانی</p>
           <div class="c-grid">
             <a class="c-item" href="tel:+989153617081">
-              <span class="c-num">09153617081</span>
+              <span class="c-num">۰۹۱۵۳۶۱۷۰۸۱</span>
               <span class="c-name">کاویان‌پور</span>
             </a>
-            <a class="c-item" href="tel:+989016962413">
-              <span class="c-num">09016962413</span>
+            <a class="c-item" href="tel:+989155623886">
+              <span class="c-num">۰۹۰۱۶۹۶۲۴۱۳</span>
               <span class="c-name">شخم‌گر</span>
             </a>
           </div>
         </div>
 
-        <p class="footer-note">منتظر حضورِ گرم‌تان هستیم ♥</p>
+        <p class="footer-note">حضور شما این جشن را جاودانه می‌سازد</p>
 
       </div>
     </article>
@@ -897,12 +893,11 @@
   /* =========================================================
      🔑 کلیدهای مخفی — این‌ها را قبل از آپلود حتماً عوض کنید
      ========================================================= */
-  var ADMIN_KEY = 'mr_hassan2413';                          /* کلید ورود به پنل ادمین */
+  var ADMIN_KEY = 'mr_hassan2413';                     /* کلید ورود به پنل ادمین */
   var SIGN_KEY  = 'hasan-melika-1405-wedding-secret';  /* کلید امضای لینک‌ها */
 
   /* =========================================================
      ساخت امضا برای نام مهمان
-     (FNV-1a دوگانه روی نام + کلید مخفی)
      ========================================================= */
   function fnv1a(str, seed) {
     var h = seed >>> 0;
@@ -935,17 +930,14 @@
   var isAdmin = ADMIN_KEY.length > 0 && adminKey === ADMIN_KEY;
 
   if (isAdmin) {
-    /* ---------- پنل ادمین ---------- */
     document.body.classList.add('admin-mode');
     document.title = 'ساخت دعوت‌نامه | حسن و ملیکا';
     initAdmin();
     startSparkles();
   } else {
-    /* ---------- دعوت‌نامه ---------- */
     document.body.classList.add('invitation-mode');
     document.title = 'دعوت‌نامه عروسی | حسن و ملیکا';
 
-    /* فقط اگر نام و امضا با هم بیایند و امضا معتبر باشد نمایش داده می‌شود */
     var validGuest = false;
     if (guestName && sig) {
       try { validGuest = (signName(guestName) === sig); } catch (e) { validGuest = false; }
