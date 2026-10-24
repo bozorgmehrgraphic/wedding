@@ -82,9 +82,7 @@
   .music-btn:hover{background:rgba(201,162,74,.22);transform:scale(1.08)}
   .music-btn:active{transform:scale(.94)}
 
-  .music-btn.playing{
-    animation:musicPulse 2.4s ease-in-out infinite;
-  }
+  .music-btn.playing{animation:musicPulse 2.4s ease-in-out infinite}
   @keyframes musicPulse{
     0%,100%{
       box-shadow:0 4px 18px rgba(0,0,0,.45), 0 0 0 0 rgba(201,162,74,.55);
@@ -275,7 +273,7 @@
   .invitation{display:none}
   body.invitation-mode .invitation{display:block}
 
-  /* ---------- جلد ---------- */
+  /* ---------- جلد (انvelope با فلپ) ---------- */
   .cover{
     position:fixed;inset:0;z-index:50;
     display:grid;place-items:center;
@@ -295,29 +293,47 @@
 
   .env{
     position:relative;
-    width:min(86vw,380px);
-    padding:46px 28px 40px;
-    text-align:center;
-    border-radius:16px;
-    border:1px solid rgba(201,162,74,.5);
-    background:
-      radial-gradient(circle at 50% 0%, rgba(201,162,74,.16), transparent 65%),
-      linear-gradient(160deg,#173c32 0%,#0a1a16 75%);
-    box-shadow:
-      0 30px 70px rgba(0,0,0,.65),
-      0 0 0 1px rgba(201,162,74,.12),
-      inset 0 0 70px rgba(201,162,74,.08);
-    animation:floaty 5s ease-in-out infinite;
+    width:min(88vw,400px);
+    border-radius:24px;
     overflow:hidden;
-  }
-  .env::before{
-    content:'';position:absolute;inset:9px;
-    border:1px solid rgba(201,162,74,.25);
-    border-radius:11px;pointer-events:none;
+    animation:floaty 5s ease-in-out infinite;
+    filter:drop-shadow(0 28px 45px rgba(0,0,0,.6));
   }
   @keyframes floaty{
     0%,100%{transform:translateY(0)}
     50%{transform:translateY(-10px)}
+  }
+
+  /* فلپ مثلثی بالای پاکت */
+  .env-flap{
+    position:absolute;
+    top:0;left:0;right:0;
+    height:78px;
+    background:linear-gradient(180deg, #24564a 0%, #1a4236 100%);
+    clip-path:polygon(0 0, 100% 0, 50% 100%);
+    z-index:2;
+    pointer-events:none;
+    filter:drop-shadow(0 1px 1.5px rgba(201,162,74,.4));
+  }
+
+  /* بدنه‌ی پاکت */
+  .env-inner{
+    position:relative;
+    padding:96px 28px 42px;
+    text-align:center;
+    background:
+      radial-gradient(circle at 50% 0%, rgba(201,162,74,.16), transparent 65%),
+      linear-gradient(160deg,#173c32 0%,#0a1a16 75%);
+    z-index:1;
+    box-shadow:
+      inset 0 0 70px rgba(201,162,74,.08);
+  }
+
+  .env-inner::before{
+    content:'';position:absolute;inset:9px;
+    border:1px solid rgba(201,162,74,.25);
+    border-radius:16px;
+    pointer-events:none;
   }
 
   .env-badge{
@@ -329,6 +345,7 @@
     padding:4px 16px;
     margin-bottom:22px;
     letter-spacing:.5px;
+    background:rgba(10,26,22,.45);
   }
 
   .env-greet{
@@ -463,15 +480,9 @@
   .corner.bl{bottom:10px;left:10px;transform:scaleY(-1)}
   .corner.br{bottom:10px;right:10px;transform:scale(-1)}
 
-  .kicker{
-    font-size:.74rem;
-    color:#b08d4d;
-  }
+  .kicker{font-size:.74rem;color:#b08d4d}
 
-  .guest-block{
-    display:none;
-    margin:16px auto 8px;
-  }
+  .guest-block{display:none;margin:16px auto 8px}
   .guest-block.show{display:block}
 
   .greeting{
@@ -548,11 +559,7 @@
     animation:heartbeat 1.8s ease-in-out infinite;
   }
 
-  .families{
-    font-size:.84rem;
-    color:#a8894f;
-    margin-top:2px;
-  }
+  .families{font-size:.84rem;color:#a8894f;margin-top:2px}
 
   .poem{
     font-size:.9rem;
@@ -570,11 +577,7 @@
     width:min(100%,400px);
   }
 
-  .date-section{
-    margin:24px auto 0;
-    width:min(100%,440px);
-  }
-
+  .date-section{margin:24px auto 0;width:min(100%,440px)}
   .date-title{
     font-size:.76rem;
     color:#b08d4d;
@@ -626,12 +629,7 @@
     box-shadow:0 0 14px rgba(201,162,74,.25);
     position:relative;
   }
-
-  .date-cell.highlight .day-name{
-    color:var(--gold-d);
-    font-weight:700;
-  }
-
+  .date-cell.highlight .day-name{color:var(--gold-d);font-weight:700}
   .date-cell.highlight .day-num{
     color:var(--gold-d);
     font-size:clamp(.82rem,3.8vw,1.08rem);
@@ -645,6 +643,56 @@
     animation:heartbeat 1.8s ease-in-out infinite;
   }
 
+  /* ---------- شمارش معکوس ---------- */
+  .countdown-section{
+    margin:26px auto 0;
+    width:min(100%,440px);
+  }
+
+  .countdown-title{
+    font-size:.76rem;
+    color:#b08d4d;
+    margin-bottom:12px;
+    letter-spacing:.5px;
+  }
+
+  .countdown{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:8px;
+  }
+
+  .cd-cell{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    padding:14px 4px;
+    border:1px solid rgba(201,162,74,.42);
+    border-radius:10px;
+    background:linear-gradient(180deg, rgba(255,255,255,.55), rgba(255,255,255,.22));
+    box-shadow:0 2px 8px rgba(201,162,74,.08);
+  }
+
+  .cd-num{
+    font-family:'Amiri',serif;
+    font-size:clamp(1.15rem,5.5vw,1.55rem);
+    font-weight:700;
+    color:var(--gold-d);
+    line-height:1;
+    letter-spacing:.5px;
+    text-shadow:0 1px 1px rgba(201,162,74,.18);
+    unicode-bidi:isolate;
+  }
+
+  .cd-label{
+    font-size:.66rem;
+    color:#a8894f;
+    letter-spacing:.2px;
+  }
+
+  /* ---------- سه جزئیات ---------- */
   .event-details{
     margin:24px auto 0;
     width:min(100%,440px);
@@ -683,6 +731,7 @@
     line-height:1.6;
   }
 
+  /* ---------- تماس ---------- */
   .contacts{
     margin-top:22px;
     padding-top:18px;
@@ -724,10 +773,7 @@
     color:var(--ink);
     unicode-bidi:isolate;
   }
-  .c-name{
-    font-size:.7rem;
-    color:#a8894f;
-  }
+  .c-name{font-size:.7rem;color:#a8894f}
 
   .footer-note{
     margin:24px auto 0;
@@ -759,6 +805,12 @@
     .detail-item{padding:12px 6px}
     .admin-card{padding:30px 20px 26px}
     .music-btn{width:42px;height:42px;top:12px;left:12px;font-size:1.05rem}
+    .countdown{gap:5px}
+    .cd-cell{padding:11px 2px}
+    .cd-num{font-size:1rem}
+    .cd-label{font-size:.58rem}
+    .env-flap{height:64px}
+    .env-inner{padding:82px 20px 36px}
   }
 
   @media (prefers-reduced-motion:reduce){
@@ -770,19 +822,13 @@
 
 <div class="sparkles" id="sparkles" aria-hidden="true"></div>
 
-<!-- =============================================
-     🎵 فایل آهنگ
-     - فایل را با نام music.mp3 در همان پوشه‌ی index.html بگذارید
-     - اگر نام دیگری دارد، فقط مقدار src را عوض کنید
-     ============================================= -->
 <audio id="bgMusic" src="music.mp3" loop preload="auto"></audio>
 
-<!-- دکمه‌ی قطع/وصل آهنگ -->
 <button class="music-btn" id="musicBtn" type="button" aria-label="قطع یا وصل صدا">
   <span class="music-icon" id="musicIcon">♪</span>
 </button>
 
-<!-- ================== پنل ساخت لینک (مخفی) ================== -->
+<!-- ================== پنل ساخت لینک ================== -->
 <div class="admin" id="adminPanel">
   <div class="admin-card">
     <h1>ساخت دعوت‌نامه</h1>
@@ -817,18 +863,21 @@
 <!-- ================== دعوت‌نامه ================== -->
 <div class="invitation" id="invitation">
 
-  <!-- جلد -->
+  <!-- جلد: پاکت با فلپ مثلثی -->
   <div class="cover" id="cover" role="button" tabindex="0" aria-label="برای دیدن کارت کلیک کنید">
     <div class="env">
-      <span class="env-badge">دعوت‌نامه</span>
-      <p class="env-greet" id="envGreet"></p>
-      <div class="env-names">
-        <span>حسن</span>
-        <span class="env-heart" aria-hidden="true">♥</span>
-        <span>ملیکا</span>
+      <div class="env-flap" aria-hidden="true"></div>
+      <div class="env-inner">
+        <span class="env-badge">دعوت‌نامه</span>
+        <p class="env-greet" id="envGreet"></p>
+        <div class="env-names">
+          <span>حسن</span>
+          <span class="env-heart" aria-hidden="true">♥</span>
+          <span>ملیکا</span>
+        </div>
+        <div class="env-sub">شخم‌گر &nbsp;•&nbsp; کاویان‌پور</div>
+        <div class="env-hint">برای دیدن کارت لمس کنید ✦</div>
       </div>
-      <div class="env-sub">شخم‌گر &nbsp;•&nbsp; کاویان‌پور</div>
-      <div class="env-hint">برای دیدن کارت لمس کنید ✦</div>
     </div>
   </div>
 
@@ -889,6 +938,7 @@
 
         <div class="orn small"><span></span><i>♥</i><span></span></div>
 
+        <!-- تقویم -->
         <div class="date-section">
           <p class="date-title">آذر ۱۴۰۵</p>
           <div class="date-row">
@@ -912,6 +962,29 @@
             <div class="date-cell">
               <span class="day-name">یکشنبه</span>
               <span class="day-num">۲۲</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- شمارش معکوس -->
+        <div class="countdown-section">
+          <p class="countdown-title">شمارش معکوس تا جشن</p>
+          <div class="countdown">
+            <div class="cd-cell">
+              <span class="cd-num" id="cdDays">--</span>
+              <span class="cd-label">روز</span>
+            </div>
+            <div class="cd-cell">
+              <span class="cd-num" id="cdHours">--</span>
+              <span class="cd-label">ساعت</span>
+            </div>
+            <div class="cd-cell">
+              <span class="cd-num" id="cdMinutes">--</span>
+              <span class="cd-label">دقیقه</span>
+            </div>
+            <div class="cd-cell">
+              <span class="cd-num" id="cdSeconds">--</span>
+              <span class="cd-label">ثانیه</span>
             </div>
           </div>
         </div>
@@ -1000,12 +1073,10 @@
 
   var isAdmin = ADMIN_KEY.length > 0 && adminKey === ADMIN_KEY;
 
-  /* عناصر آهنگ */
   var bgMusic    = document.getElementById('bgMusic');
   var musicBtn   = document.getElementById('musicBtn');
   var musicIcon  = document.getElementById('musicIcon');
   var userMuted  = false;
-  var musicStarted = false;
 
   if (isAdmin) {
     document.body.classList.add('admin-mode');
@@ -1034,6 +1105,7 @@
     }
 
     initInvitation();
+    initCountdown();
     startSparkles();
     initMusic();
   }
@@ -1075,10 +1147,7 @@
       document.body.classList.add('opened');
       setTimeout(function () { cover.style.display = 'none'; }, 1100);
 
-      /* شروع آهنگ هنگام باز شدن کارت (اگر قطع نشده باشد) */
-      if (!userMuted) {
-        playMusic();
-      }
+      if (!userMuted) playMusic();
     }
 
     cover.addEventListener('click', openCard);
@@ -1091,27 +1160,67 @@
   }
 
   /* =============================================
-     منطق آهنگ
+     شمارش معکوس — ۲۰ آذر ۱۴۰۵ ساعت ۱۸:۰۰ به وقت تهران
+     (معادل 11 دسامبر 2026 ساعت 18:00 تهران = UTC+3:30)
+     ============================================= */
+  function initCountdown() {
+    var target = new Date('2026-12-11T18:00:00+03:30').getTime();
+
+    var cdDays    = document.getElementById('cdDays');
+    var cdHours   = document.getElementById('cdHours');
+    var cdMinutes = document.getElementById('cdMinutes');
+    var cdSeconds = document.getElementById('cdSeconds');
+
+    if (!cdDays) return;
+
+    function toFa(n) {
+      return String(n).replace(/[0-9]/g, function (d) { return '۰۱۲۳۴۵۶۷۸۹'[d]; });
+    }
+    function pad2(s) {
+      return s.length < 2 ? '۰' + s : s;
+    }
+
+    function tick() {
+      var diff = target - Date.now();
+
+      if (diff <= 0) {
+        cdDays.textContent = '۰';
+        cdHours.textContent = '۰۰';
+        cdMinutes.textContent = '۰۰';
+        cdSeconds.textContent = '۰۰';
+        return;
+      }
+
+      var days    = Math.floor(diff / 86400000);
+      var hours   = Math.floor((diff % 86400000) / 3600000);
+      var minutes = Math.floor((diff % 3600000) / 60000);
+      var seconds = Math.floor((diff % 60000) / 1000);
+
+      cdDays.textContent    = toFa(days);
+      cdHours.textContent   = pad2(toFa(hours));
+      cdMinutes.textContent = pad2(toFa(minutes));
+      cdSeconds.textContent = pad2(toFa(seconds));
+    }
+
+    tick();
+    setInterval(tick, 1000);
+  }
+
+  /* =============================================
+     آهنگ
      ============================================= */
   function initMusic() {
-    /* دکمه را روی صفحه دعوت‌نامه نشان بده */
     musicBtn.classList.add('show');
-
-    /* تنظیم ولوم ملایم */
     try { bgMusic.volume = 0.45; } catch (e) {}
 
-    /* همگام‌سازی آیکن با وضعیت پخش */
     bgMusic.addEventListener('play',  updateMusicIcon);
     bgMusic.addEventListener('pause', updateMusicIcon);
     bgMusic.addEventListener('error', function () {
-      /* اگر فایل آهنگ پیدا نشد، دکمه رو مخفی کن */
       musicBtn.style.display = 'none';
     });
 
-    /* کلیک روی دکمه = قطع/وصل */
     musicBtn.addEventListener('click', function (e) {
       e.stopPropagation();
-
       if (bgMusic.paused) {
         userMuted = false;
         playMusic();
@@ -1127,24 +1236,20 @@
     if (!bgMusic) return;
     var p = bgMusic.play();
     if (p && typeof p.catch === 'function') {
-      p.catch(function () {
-        /* مرورگر اجازه نداد — بی‌صدا رد شو */
-      });
+      p.catch(function () {});
     }
-    musicStarted = true;
     updateMusicIcon();
   }
 
   function updateMusicIcon() {
     var isPlaying = !bgMusic.paused && !bgMusic.ended;
+    musicIcon.textContent = '♪';
 
     if (isPlaying && !userMuted) {
-      musicIcon.textContent = '♪';
       musicBtn.classList.add('playing');
       musicBtn.classList.remove('muted');
       musicBtn.setAttribute('aria-label', 'قطع صدا');
     } else {
-      musicIcon.textContent = '♪';
       musicBtn.classList.remove('playing');
       musicBtn.classList.add('muted');
       musicBtn.setAttribute('aria-label', 'وصل صدا');
@@ -1152,7 +1257,7 @@
   }
 
   /* =============================================
-     منطق پنل ادمین
+     پنل ادمین
      ============================================= */
   function initAdmin() {
     var input = document.getElementById('guestInput');
@@ -1165,7 +1270,6 @@
 
     function generate() {
       var name = input.value.trim();
-
       if (!name) {
         errorMsg.classList.add('show');
         result.classList.remove('show');
@@ -1173,7 +1277,6 @@
       }
 
       errorMsg.classList.remove('show');
-
       var base = location.href.split('?')[0].split('#')[0];
       var s = signName(name);
       var link = base + '?g=' + encodeURIComponent(name) + '&s=' + s;
