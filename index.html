@@ -33,7 +33,6 @@
   body.admin-mode{overflow-y:auto;overflow-x:hidden}
   body.invitation-mode{overflow:hidden;height:100vh}
 
-  /* ============ ذرات درخشان ============ */
   .sparkles{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:1}
   .sparkle{
     position:absolute;
@@ -53,7 +52,6 @@
     100%{transform:translateY(-108vh) scale(1.15) rotate(200deg);opacity:0}
   }
 
-  /* ============ دکمه‌ی آهنگ ============ */
   .music-btn{
     position:fixed;
     top:16px;
@@ -81,7 +79,6 @@
   .music-btn.show{display:flex}
   .music-btn:hover{background:rgba(201,162,74,.22);transform:scale(1.08)}
   .music-btn:active{transform:scale(.94)}
-
   .music-btn.playing{animation:musicPulse 2.4s ease-in-out infinite}
   @keyframes musicPulse{
     0%,100%{
@@ -93,7 +90,6 @@
       color:#f9ecc4;
     }
   }
-
   .music-btn.muted{
     color:rgba(243,224,166,.4);
     border-color:rgba(201,162,74,.25);
@@ -102,7 +98,6 @@
     text-decoration:line-through;
     text-decoration-thickness:2px;
   }
-
   .music-icon{
     display:inline-block;
     line-height:1;
@@ -110,7 +105,6 @@
     font-family:'Vazirmatn',sans-serif;
   }
 
-  /* ============ ضربان قلب ============ */
   @keyframes heartbeat{
     0%,100%{transform:translateY(-.02em) scale(1)}
     15%{transform:translateY(-.02em) scale(1.18)}
@@ -119,9 +113,6 @@
     60%{transform:translateY(-.02em) scale(1)}
   }
 
-  /* ============================================= */
-  /* ============ پنل ساخت لینک ============ */
-  /* ============================================= */
   .admin{
     position:relative;
     z-index:10;
@@ -155,10 +146,7 @@
     margin-bottom:26px;
     line-height:1.9;
   }
-  .field{
-    text-align:right;
-    margin-bottom:16px;
-  }
+  .field{text-align:right;margin-bottom:16px}
   .field label{
     display:block;
     font-size:.78rem;
@@ -199,12 +187,7 @@
   .btn:hover{filter:brightness(1.08);box-shadow:0 8px 24px rgba(201,162,74,.35)}
   .btn:active{transform:scale(.98)}
 
-  .error-msg{
-    color:#e08080;
-    font-size:.78rem;
-    margin-top:10px;
-    display:none;
-  }
+  .error-msg{color:#e08080;font-size:.78rem;margin-top:10px;display:none}
   .error-msg.show{display:block}
 
   .result{
@@ -267,156 +250,289 @@
   }
   .admin-note strong{color:var(--gold-l)}
 
-  /* ============================================= */
-  /* ============ دعوت‌نامه ============ */
-  /* ============================================= */
   .invitation{display:none}
   body.invitation-mode .invitation{display:block}
 
-  /* ---------- جلد (انvelope با فلپ) ---------- */
+  /* =============================================
+     جلد — پاکت‌نامه با فلپ و V-fold
+     ============================================= */
   .cover{
     position:fixed;inset:0;z-index:50;
     display:grid;place-items:center;
     padding:24px;
     cursor:pointer;
     animation:fadeIn 1.1s ease both;
-    transition:opacity .8s ease, transform 1s cubic-bezier(.55,0,.3,1), filter .8s ease;
+    transition:opacity .7s ease, transform .8s ease, filter .7s ease;
     touch-action:manipulation;
   }
   body.opened .cover{
     opacity:0;
-    transform:scale(1.45) rotate(-3deg);
-    filter:blur(9px);
+    transform:scale(1.15);
+    filter:blur(8px);
     pointer-events:none;
   }
   @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 
-  .env{
+  .envelope-scene{
+    width:min(90vw,430px);
+    aspect-ratio:1.45 / 1;
     position:relative;
-    width:min(88vw,400px);
-    border-radius:24px;
-    overflow:hidden;
     animation:floaty 5s ease-in-out infinite;
     filter:drop-shadow(0 28px 45px rgba(0,0,0,.6));
   }
   @keyframes floaty{
     0%,100%{transform:translateY(0)}
-    50%{transform:translateY(-10px)}
+    50%{transform:translateY(-8px)}
   }
 
-  /* فلپ مثلثی بالای پاکت */
-  .env-flap{
-    position:absolute;
-    top:0;left:0;right:0;
-    height:78px;
-    background:linear-gradient(180deg, #24564a 0%, #1a4236 100%);
-    clip-path:polygon(0 0, 100% 0, 50% 100%);
-    z-index:2;
-    pointer-events:none;
-    filter:drop-shadow(0 1px 1.5px rgba(201,162,74,.4));
-  }
-
-  /* بدنه‌ی پاکت */
-  .env-inner{
+  .envelope{
     position:relative;
-    padding:96px 28px 42px;
-    text-align:center;
-    background:
-      radial-gradient(circle at 50% 0%, rgba(201,162,74,.16), transparent 65%),
-      linear-gradient(160deg,#173c32 0%,#0a1a16 75%);
-    z-index:1;
-    box-shadow:
-      inset 0 0 70px rgba(201,162,74,.08);
+    width:100%;
+    height:100%;
+    perspective:1400px;
+    border-radius:10px;
   }
 
-  .env-inner::before{
-    content:'';position:absolute;inset:9px;
-    border:1px solid rgba(201,162,74,.25);
-    border-radius:16px;
+  /* لایه‌ی پشت پاکت */
+  .env-back{
+    position:absolute;
+    inset:0;
+    background:linear-gradient(160deg,#1a4236 0%,#0a1a16 100%);
+    border-radius:10px;
+    border:1px solid rgba(201,162,74,.35);
+    box-shadow:0 0 0 1px rgba(201,162,74,.1);
+    z-index:1;
+  }
+
+  /* نامه‌ی داخل پاکت — با کلیک از پاکت بیرون می‌آید */
+  .env-letter{
+    position:absolute;
+    left:8%;
+    right:8%;
+    top:10%;
+    bottom:10%;
+    background:linear-gradient(150deg,#fdfaf3 0%,#f8f1e2 60%,#f2e8d2 100%);
+    border-radius:4px;
+    z-index:2;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:16px;
+    transform:translateY(0);
+    transition:transform .7s cubic-bezier(.45,0,.25,1), opacity .5s ease;
+    box-shadow:0 1px 3px rgba(0,0,0,.15), 0 0 0 1px rgba(201,162,74,.2);
+  }
+
+  body.letter-up .env-letter{
+    transform:translateY(-85%);
+  }
+
+  body.opened .env-letter{
+    opacity:0;
+    transition:opacity .5s ease;
+  }
+
+  .letter-content{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:6px;
+  }
+
+  .letter-orn{
+    color:var(--gold);
+    font-size:1rem;
+    line-height:1;
+  }
+
+  .letter-title{
+    font-family:'Amiri',serif;
+    font-size:clamp(.85rem,3.3vw,1.05rem);
+    color:#b08d4d;
+    font-weight:700;
+    letter-spacing:1px;
+  }
+
+  .letter-names{
+    font-family:'Amiri',serif;
+    font-size:clamp(1.1rem,4.2vw,1.4rem);
+    color:var(--gold-d);
+    font-weight:700;
+    line-height:1.4;
+  }
+
+  .letter-heart{
+    color:var(--red-heart);
+    font-size:.7em;
+    display:inline-block;
+    animation:heartbeat 1.8s ease-in-out infinite;
+  }
+
+  /* لایه‌ی روی پاکت — با خطوط V-fold */
+  .env-front{
+    position:absolute;
+    inset:0;
+    z-index:3;
+    border-radius:10px;
+    background:
+      linear-gradient(180deg, rgba(0,0,0,.06) 0%, transparent 25%),
+      linear-gradient(160deg,#24564a 0%,#173c32 55%,#14352b 100%);
+    box-shadow:
+      inset 0 0 0 1px rgba(201,162,74,.3),
+      inset 0 -20px 30px -12px rgba(0,0,0,.28),
+      inset 18px 0 30px -18px rgba(0,0,0,.2),
+      inset -18px 0 30px -18px rgba(0,0,0,.2);
+    overflow:hidden;
+  }
+
+  /* خطوط V-fold — دو خط مورب از گوشه‌های بالا تا وسط پایین */
+  .env-front::before,
+  .env-front::after{
+    content:'';
+    position:absolute;
+    top:0;
+    height:1px;
+    width:60%;
     pointer-events:none;
+  }
+  .env-front::before{
+    left:0;
+    background:linear-gradient(90deg, rgba(201,162,74,.35), rgba(201,162,74,.08));
+    transform-origin:left center;
+    transform:rotate(33deg);
+  }
+  .env-front::after{
+    right:0;
+    background:linear-gradient(-90deg, rgba(201,162,74,.35), rgba(201,162,74,.08));
+    transform-origin:right center;
+    transform:rotate(-33deg);
+  }
+
+  /* محتوای روی پاکت */
+  .env-content{
+    position:absolute;
+    top:50%;
+    left:20px;
+    right:20px;
+    bottom:16px;
+    z-index:4;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:space-evenly;
+    text-align:center;
+    transition:opacity .45s ease;
+    pointer-events:none;
+  }
+  body.flap-open .env-content{
+    opacity:0;
   }
 
   .env-badge{
     display:inline-block;
-    font-size:.7rem;
+    font-size:.65rem;
     color:var(--gold);
     border:1px solid rgba(201,162,74,.45);
     border-radius:999px;
-    padding:4px 16px;
-    margin-bottom:22px;
+    padding:3px 14px;
     letter-spacing:.5px;
-    background:rgba(10,26,22,.45);
+    background:rgba(10,26,22,.4);
   }
 
   .env-greet{
     display:none;
     font-family:'Amiri',serif;
     font-weight:700;
-    font-size:clamp(1.1rem,5vw,1.45rem);
+    font-size:clamp(.85rem,3.6vw,1rem);
     color:#f9ecc4;
-    margin:0 auto 20px;
-    line-height:1.75;
-    max-width:calc(100% - 12px);
+    margin:0 auto;
+    line-height:1.6;
+    max-width:100%;
     overflow-wrap:break-word;
-    letter-spacing:.5px;
-    text-shadow:
-      0 0 22px rgba(243,224,166,.6),
-      0 0 6px rgba(243,224,166,.4);
+    text-shadow:0 0 15px rgba(243,224,166,.5);
   }
   .env-greet.show{display:block}
   .env-greet::before,
   .env-greet::after{
     content:'✦';
     color:var(--gold);
-    font-size:.62em;
-    margin:0 .5em;
+    font-size:.6em;
+    margin:0 .45em;
     opacity:.85;
-    text-shadow:0 0 8px rgba(201,162,74,.55);
-    vertical-align:.1em;
+    vertical-align:.15em;
     display:inline-block;
   }
 
   .env-names{
     font-family:'Amiri',serif;
     font-weight:700;
-    font-size:clamp(1.9rem,8.5vw,2.6rem);
-    line-height:1.35;
+    font-size:clamp(1.3rem,6.2vw,1.8rem);
+    line-height:1.2;
     color:var(--gold-l);
     display:flex;
-    flex-direction:column;
     align-items:center;
-    gap:2px;
-    text-shadow:0 0 26px rgba(243,224,166,.45);
+    justify-content:center;
+    gap:.35em;
+    text-shadow:0 0 22px rgba(243,224,166,.4);
   }
 
   .env-heart{
-    font-size:.7em;
+    font-size:.68em;
     color:#e8b96a;
     display:inline-block;
     line-height:1;
-    margin:2px 0;
-    text-shadow:0 0 22px rgba(232,185,106,.75), 0 0 6px rgba(232,185,106,.5);
+    text-shadow:0 0 18px rgba(232,185,106,.7);
     animation:heartbeat 1.8s ease-in-out infinite;
   }
 
   .env-sub{
-    margin-top:14px;
-    font-size:.82rem;
-    color:rgba(243,224,166,.8);
+    font-size:.7rem;
+    color:rgba(243,224,166,.75);
+    letter-spacing:.3px;
   }
 
   .env-hint{
-    margin-top:30px;
-    font-size:.78rem;
-    color:rgba(243,224,166,.7);
+    font-size:.7rem;
+    color:rgba(243,224,166,.72);
     animation:pulseHint 2.4s ease-in-out infinite;
   }
   @keyframes pulseHint{
-    0%,100%{opacity:.45}
+    0%,100%{opacity:.5}
     50%{opacity:1}
   }
 
-  /* ---------- کارت ---------- */
+  /* فلپ مثلثی بالای پاکت */
+  .env-flap{
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    height:42%;
+    z-index:5;
+    clip-path:polygon(0 0, 100% 0, 50% 100%);
+    background:linear-gradient(180deg,#2a6154 0%,#1e4d40 55%,#173c32 100%);
+    transform-origin:top center;
+    transform:rotateX(0deg);
+    transition:transform .7s cubic-bezier(.45,0,.25,1);
+    backface-visibility:hidden;
+    -webkit-backface-visibility:hidden;
+    box-shadow:inset 0 -1px 0 rgba(201,162,74,.25);
+  }
+  .env-flap::after{
+    content:'';
+    position:absolute;
+    inset:0;
+    background:radial-gradient(ellipse at 50% 100%, rgba(201,162,74,.18), transparent 60%);
+    pointer-events:none;
+  }
+  body.flap-open .env-flap{
+    transform:rotateX(180deg);
+  }
+
+  /* =============================================
+     کارت
+     ============================================= */
   .card-wrap{
     position:fixed;inset:0;z-index:20;
     display:flex;
@@ -425,7 +541,7 @@
     overflow-x:hidden;
     opacity:0;
     pointer-events:none;
-    transition:opacity .4s ease .25s;
+    transition:opacity .4s ease .1s;
     -webkit-overflow-scrolling:touch;
   }
   body.opened .card-wrap{opacity:1;pointer-events:auto}
@@ -443,12 +559,12 @@
       0 30px 80px rgba(0,0,0,.65),
       0 0 0 1px rgba(201,162,74,.45),
       inset 0 0 0 1px rgba(255,255,255,.7);
-    transform:perspective(1400px) rotateY(-100deg) scale(.9);
+    transform:scale(.82);
     opacity:0;
-    transition:transform 1.25s cubic-bezier(.19,1,.22,1), opacity .8s ease;
+    transition:transform 1s cubic-bezier(.19,1,.22,1), opacity .65s ease;
   }
   body.opened .card{
-    transform:perspective(1400px) rotateY(0deg) scale(1);
+    transform:scale(1);
     opacity:1;
   }
 
@@ -643,17 +759,28 @@
     animation:heartbeat 1.8s ease-in-out infinite;
   }
 
-  /* ---------- شمارش معکوس ---------- */
-  .countdown-section{
-    margin:26px auto 0;
-    width:min(100%,440px);
-  }
+  .countdown-section{margin:26px auto 0;width:min(100%,440px)}
 
   .countdown-title{
-    font-size:.76rem;
-    color:#b08d4d;
-    margin-bottom:12px;
-    letter-spacing:.5px;
+    font-family:'Amiri',serif;
+    font-weight:700;
+    font-size:clamp(.9rem,3.9vw,1.05rem);
+    color:var(--gold-d);
+    margin-bottom:14px;
+    line-height:1.85;
+    letter-spacing:.2px;
+  }
+  .countdown-title::before,
+  .countdown-title::after{
+    content:'✦';
+    color:var(--gold);
+    font-size:.6em;
+    margin:0 .55em;
+    opacity:.85;
+    vertical-align:.15em;
+    display:inline-block;
+    font-family:'Vazirmatn',sans-serif;
+    font-style:normal;
   }
 
   .countdown{
@@ -692,7 +819,6 @@
     letter-spacing:.2px;
   }
 
-  /* ---------- سه جزئیات ---------- */
   .event-details{
     margin:24px auto 0;
     width:min(100%,440px);
@@ -731,7 +857,6 @@
     line-height:1.6;
   }
 
-  /* ---------- تماس ---------- */
   .contacts{
     margin-top:22px;
     padding-top:18px;
@@ -809,8 +934,13 @@
     .cd-cell{padding:11px 2px}
     .cd-num{font-size:1rem}
     .cd-label{font-size:.58rem}
-    .env-flap{height:64px}
-    .env-inner{padding:82px 20px 36px}
+    .countdown-title{font-size:.82rem}
+    .env-content{top:52%;bottom:12px;left:14px;right:14px}
+    .env-names{font-size:1.2rem}
+    .env-greet{font-size:.78rem}
+    .env-sub{font-size:.62rem}
+    .env-hint{font-size:.62rem}
+    .env-badge{font-size:.58rem;padding:2px 10px}
   }
 
   @media (prefers-reduced-motion:reduce){
@@ -863,25 +993,50 @@
 <!-- ================== دعوت‌نامه ================== -->
 <div class="invitation" id="invitation">
 
-  <!-- جلد: پاکت با فلپ مثلثی -->
-  <div class="cover" id="cover" role="button" tabindex="0" aria-label="برای دیدن کارت کلیک کنید">
-    <div class="env">
-      <div class="env-flap" aria-hidden="true"></div>
-      <div class="env-inner">
-        <span class="env-badge">دعوت‌نامه</span>
-        <p class="env-greet" id="envGreet"></p>
-        <div class="env-names">
-          <span>حسن</span>
-          <span class="env-heart" aria-hidden="true">♥</span>
-          <span>ملیکا</span>
+  <!-- ===== جلد: پاکت‌نامه با فلپ، V-fold و نامه‌ی درون ===== -->
+  <div class="cover" id="cover" role="button" tabindex="0" aria-label="برای باز کردن نامه کلیک کنید">
+    <div class="envelope-scene">
+      <div class="envelope">
+
+        <!-- لایه‌ی پشت -->
+        <div class="env-back"></div>
+
+        <!-- نامه (داخل پاکت، با کلیک بیرون می‌آید) -->
+        <div class="env-letter" id="envLetter">
+          <div class="letter-content">
+            <span class="letter-orn">✦</span>
+            <p class="letter-title">دعوت‌نامه</p>
+            <p class="letter-names">
+              حسن <span class="letter-heart">♥</span> ملیکا
+            </p>
+            <span class="letter-orn">✦</span>
+          </div>
         </div>
-        <div class="env-sub">شخم‌گر &nbsp;•&nbsp; کاویان‌پور</div>
-        <div class="env-hint">برای دیدن کارت لمس کنید ✦</div>
+
+        <!-- روی پاکت با V-fold -->
+        <div class="env-front"></div>
+
+        <!-- محتوای روی پاکت -->
+        <div class="env-content">
+          <span class="env-badge">دعوت‌نامه</span>
+          <p class="env-greet" id="envGreet"></p>
+          <div class="env-names">
+            <span>حسن</span>
+            <span class="env-heart" aria-hidden="true">♥</span>
+            <span>ملیکا</span>
+          </div>
+          <div class="env-sub">شخم‌گر &nbsp;•&nbsp; کاویان‌پور</div>
+          <div class="env-hint">برای باز کردن نامه لمس کنید ✦</div>
+        </div>
+
+        <!-- فلپ بالای پاکت -->
+        <div class="env-flap"></div>
+
       </div>
     </div>
   </div>
 
-  <!-- کارت -->
+  <!-- ===== کارت ===== -->
   <div class="card-wrap">
     <article class="card">
       <div class="card-inner">
@@ -938,7 +1093,6 @@
 
         <div class="orn small"><span></span><i>♥</i><span></span></div>
 
-        <!-- تقویم -->
         <div class="date-section">
           <p class="date-title">آذر ۱۴۰۵</p>
           <div class="date-row">
@@ -966,25 +1120,24 @@
           </div>
         </div>
 
-        <!-- شمارش معکوس -->
         <div class="countdown-section">
-          <p class="countdown-title">شمارش معکوس تا جشن</p>
+          <p class="countdown-title">تا آغازِ قصه‌ی عشق، چند نفس مانده</p>
           <div class="countdown">
             <div class="cd-cell">
-              <span class="cd-num" id="cdDays">--</span>
-              <span class="cd-label">روز</span>
-            </div>
-            <div class="cd-cell">
-              <span class="cd-num" id="cdHours">--</span>
-              <span class="cd-label">ساعت</span>
+              <span class="cd-num" id="cdSeconds">--</span>
+              <span class="cd-label">ثانیه</span>
             </div>
             <div class="cd-cell">
               <span class="cd-num" id="cdMinutes">--</span>
               <span class="cd-label">دقیقه</span>
             </div>
             <div class="cd-cell">
-              <span class="cd-num" id="cdSeconds">--</span>
-              <span class="cd-label">ثانیه</span>
+              <span class="cd-num" id="cdHours">--</span>
+              <span class="cd-label">ساعت</span>
+            </div>
+            <div class="cd-cell">
+              <span class="cd-num" id="cdDays">--</span>
+              <span class="cd-label">روز</span>
             </div>
           </div>
         </div>
@@ -1034,15 +1187,9 @@
 (function () {
   'use strict';
 
-  /* =========================================================
-     🔑 کلیدهای مخفی
-     ========================================================= */
   var ADMIN_KEY = 'mr_hassan2413';
   var SIGN_KEY  = 'hasan-melika-1405-wedding-secret';
 
-  /* =========================================================
-     ساخت امضا
-     ========================================================= */
   function fnv1a(str, seed) {
     var h = seed >>> 0;
     for (var i = 0; i < str.length; i++) {
@@ -1063,9 +1210,6 @@
            ('00000000' + b.toString(16)).slice(-8);
   }
 
-  /* =============================================
-     تشخیص حالت صفحه
-     ============================================= */
   var params    = new URLSearchParams(location.search);
   var guestName = (params.get('g')     || '').trim();
   var sig       = (params.get('s')     || '').trim();
@@ -1110,9 +1254,6 @@
     initMusic();
   }
 
-  /* =============================================
-     ذرات درخشان
-     ============================================= */
   function startSparkles() {
     var sparkles = document.getElementById('sparkles');
     var glyphs = ['✦', '✧', '♥', '❉', '✶'];
@@ -1135,7 +1276,11 @@
   }
 
   /* =============================================
-     منطق دعوت‌نامه
+     باز کردن پاکت — انیمیشن مرحله‌ای
+       0ms    : فلپ باز می‌شود
+       500ms  : نامه از پاکت بیرون می‌آید
+       1300ms : کارت ظاهر، نامه محو
+       2100ms : جلد پنهان
      ============================================= */
   function initInvitation() {
     var cover = document.getElementById('cover');
@@ -1144,10 +1289,26 @@
     function openCard() {
       if (opened) return;
       opened = true;
-      document.body.classList.add('opened');
-      setTimeout(function () { cover.style.display = 'none'; }, 1100);
 
       if (!userMuted) playMusic();
+
+      /* مرحله ۱: باز شدن فلپ */
+      document.body.classList.add('flap-open');
+
+      /* مرحله ۲: بیرون آمدن نامه */
+      setTimeout(function () {
+        document.body.classList.add('letter-up');
+      }, 500);
+
+      /* مرحله ۳: ظاهر شدن کارت + محو نامه/پاکت */
+      setTimeout(function () {
+        document.body.classList.add('opened');
+      }, 1300);
+
+      /* مرحله ۴: پنهان کردن کامل جلد */
+      setTimeout(function () {
+        cover.style.display = 'none';
+      }, 2100);
     }
 
     cover.addEventListener('click', openCard);
@@ -1160,8 +1321,7 @@
   }
 
   /* =============================================
-     شمارش معکوس — ۲۰ آذر ۱۴۰۵ ساعت ۱۸:۰۰ به وقت تهران
-     (معادل 11 دسامبر 2026 ساعت 18:00 تهران = UTC+3:30)
+     شمارش معکوس
      ============================================= */
   function initCountdown() {
     var target = new Date('2026-12-11T18:00:00+03:30').getTime();
@@ -1206,9 +1366,6 @@
     setInterval(tick, 1000);
   }
 
-  /* =============================================
-     آهنگ
-     ============================================= */
   function initMusic() {
     musicBtn.classList.add('show');
     try { bgMusic.volume = 0.45; } catch (e) {}
@@ -1256,9 +1413,6 @@
     }
   }
 
-  /* =============================================
-     پنل ادمین
-     ============================================= */
   function initAdmin() {
     var input = document.getElementById('guestInput');
     var genBtn = document.getElementById('genBtn');
