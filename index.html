@@ -205,9 +205,10 @@
     border-top:1px dashed rgba(201,162,74,.2);
     font-size:.72rem;
     line-height:1.9;
-    color:rgba(243,224,166,.45);
+    color:rgba(243,224,166,.5);
     text-align:right;
   }
+  .admin-note strong{color:var(--gold-l)}
 
   /* ============================================= */
   /* ============ دعوت‌نامه ============ */
@@ -271,7 +272,7 @@
     letter-spacing:.5px;
   }
 
-  /* ✦ نام مهمان روی جلد (فونت ارتقاء یافته) */
+  /* ✦ نام مهمان روی جلد */
   .env-greet{
     display:none;
     font-family:'Amiri',serif;
@@ -410,7 +411,6 @@
     color:#b08d4d;
   }
 
-  /* ✦ بلوک مهمان داخل کارت */
   .guest-block{
     display:none;
     margin:16px auto 8px;
@@ -719,7 +719,7 @@
 
 <div class="sparkles" id="sparkles" aria-hidden="true"></div>
 
-<!-- ================== پنل ساخت لینک ================== -->
+<!-- ================== پنل ساخت لینک (مخفی) ================== -->
 <div class="admin" id="adminPanel">
   <div class="admin-card">
     <h1>ساخت دعوت‌نامه</h1>
@@ -745,7 +745,8 @@
     </div>
 
     <p class="admin-note">
-      این لینک را برای مهمان بفرستید؛ وقتی باز کند، دعوت‌نامه با نام خودش نمایش داده می‌شود.
+      این لینک را برای مهمان بفرستید؛ وقتی باز کند، دعوت‌نامه با نام خودش نمایش داده می‌شود.<br>
+      <strong>آدرس این پنل را جایی امن ذخیره کنید</strong> — این پنل فقط با همین آدرس مخفی باز می‌شود و دیگران با حذف پارامترها هم به آن دسترسی ندارند.
     </p>
   </div>
 </div>
@@ -802,7 +803,6 @@
 
         <div class="orn"><span></span><i>✦</i><span></span></div>
 
-        <!-- بلوک مهمان داخل کارت -->
         <div class="guest-block" id="guestBlock">
           <p class="greeting" id="cardGreeting"></p>
           <p class="invite-line">شما دعوت شده‌اید به جشن عروسی ما</p>
@@ -900,36 +900,47 @@
 (function () {
   'use strict';
 
-  /* =============================================
-     تشخیص حالت: پنل ادمین یا دعوت‌نامه
-     ============================================= */
-  var params = new URLSearchParams(location.search);
-  var guestName = (params.get('g') || '').trim();
+  /* =========================================================
+     🔑 کلید مخفی پنل ادمین
+     این را هر وقت خواستید عوض کنید. بعد از عوض کردن، آدرس
+     پنل شما می‌شود:
+         index.html?admin=کلید_جدید
+     ========================================================= */
+  var ADMIN_KEY = 'mdk-2026';
 
-  if (guestName) {
-    /* ---------- حالت دعوت‌نامه ---------- */
+  /* =============================================
+     تشخیص حالت صفحه
+     ============================================= */
+  var params   = new URLSearchParams(location.search);
+  var guestName = (params.get('g')     || '').trim();
+  var adminKey  = (params.get('admin') || '').trim();
+
+  var isAdmin  = (ADMIN_KEY.length > 0 && adminKey === ADMIN_KEY);
+  var isInvite = !!guestName && !isAdmin;
+
+  if (isAdmin) {
+    /* ---------- پنل ادمین (فقط با کلید مخفی) ---------- */
+    document.body.classList.add('admin-mode');
+    document.title = 'ساخت دعوت‌نامه | حسن و ملیکا';
+    initAdmin();
+  } else {
+    /* ---------- دعوت‌نامه (با نام یا بدون نام) ---------- */
     document.body.classList.add('invitation-mode');
     document.title = 'دعوت‌نامه عروسی | حسن و ملیکا';
 
-    /* نام مهمان روی جلد */
-    var envGreet = document.getElementById('envGreet');
-    envGreet.textContent = guestName;
-    envGreet.classList.add('show');
+    if (isInvite) {
+      var envGreet = document.getElementById('envGreet');
+      envGreet.textContent = guestName;
+      envGreet.classList.add('show');
 
-    /* نام مهمان داخل کارت + خط دعوت */
-    var cardGreeting = document.getElementById('cardGreeting');
-    cardGreeting.textContent = guestName;
+      var cardGreeting = document.getElementById('cardGreeting');
+      cardGreeting.textContent = guestName;
 
-    var guestBlock = document.getElementById('guestBlock');
-    guestBlock.classList.add('show');
+      var guestBlock = document.getElementById('guestBlock');
+      guestBlock.classList.add('show');
+    }
 
     initInvitation();
-  } else {
-    /* ---------- حالت پنل ادمین ---------- */
-    document.body.classList.add('admin-mode');
-    document.title = 'ساخت دعوت‌نامه | حسن و ملیکا';
-
-    initAdmin();
   }
 
   /* =============================================
@@ -1000,6 +1011,7 @@
 
       errorMsg.classList.remove('show');
 
+      /* لینک مهمان — بدون پارامتر admin */
       var base = location.href.split('?')[0].split('#')[0];
       var link = base + '?g=' + encodeURIComponent(name);
 
