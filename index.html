@@ -33,6 +33,7 @@
   body.admin-mode{overflow-y:auto;overflow-x:hidden}
   body.invitation-mode{overflow:hidden;height:100vh}
 
+  /* ============ ذرات درخشان پس‌زمینه ============ */
   .sparkles{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:1}
   .sparkle{
     position:absolute;
@@ -52,13 +53,15 @@
     100%{transform:translateY(-108vh) scale(1.15) rotate(200deg);opacity:0}
   }
 
-  /* ============ بارش قلب ============ */
+  /* =============================================
+     ❤️ بارش قلب و گل — حالا روی کارت (z-index 25)
+     ============================================= */
   .hearts{
     position:fixed;
     inset:0;
     overflow:hidden;
     pointer-events:none;
-    z-index:15;
+    z-index:25;                      /* بالاتر از کارت (20) */
     opacity:0;
     transition:opacity 1.2s ease .3s;
   }
@@ -66,34 +69,67 @@
 
   .falling-heart{
     position:absolute;
-    top:-40px;
-    color:var(--red-heart);
-    opacity:0;
+    top:-60px;
     line-height:1;
+    opacity:0;
     animation-name:fall;
     animation-timing-function:linear;
     animation-fill-mode:forwards;
     will-change:transform,opacity;
-    filter:drop-shadow(0 0 8px rgba(192,57,43,.45));
     user-select:none;
+    display:block;
   }
+
   @keyframes fall{
     0%{
-      transform:translateY(0) translateX(0) rotate(0deg) scale(.6);
+      transform:translateY(0) translateX(0) rotate(0deg) scale(.55);
       opacity:0;
     }
     10%{opacity:.9}
-    50%{opacity:.7}
+    50%{opacity:.8}
     90%{opacity:.55}
     100%{
-      transform:translateY(112vh) translateX(var(--drift, 0px)) rotate(var(--rot, 180deg)) scale(1);
+      transform:translateY(118vh) translateX(var(--drift, 0px)) rotate(var(--rot, 180deg)) scale(1);
       opacity:0;
     }
   }
 
-  .falling-heart.gold{color:var(--gold);filter:drop-shadow(0 0 8px rgba(201,162,74,.5))}
-  .falling-heart.light{color:#e8b96a;filter:drop-shadow(0 0 8px rgba(232,185,106,.55))}
-  .falling-heart.dark{color:#a93226;filter:drop-shadow(0 0 6px rgba(169,50,38,.4))}
+  /* رنگ‌های قلب */
+  .falling-heart.heart-red{
+    color:#c0392b;
+    filter:drop-shadow(0 0 6px rgba(192,57,43,.4));
+  }
+  .falling-heart.heart-light{
+    color:#e74c3c;
+    filter:drop-shadow(0 0 7px rgba(231,76,60,.5));
+  }
+  .falling-heart.heart-gold{
+    color:#c9a24a;
+    filter:drop-shadow(0 0 7px rgba(201,162,74,.5));
+  }
+  .falling-heart.heart-pale{
+    color:#f3e0a6;
+    filter:drop-shadow(0 0 6px rgba(243,224,166,.55));
+  }
+
+  /* گل‌های شناور */
+  .falling-heart.flower{
+    color:var(--gold);
+    filter:drop-shadow(0 0 5px rgba(201,162,74,.35));
+  }
+  .falling-heart.flower svg{
+    width:100%;
+    height:100%;
+    display:block;
+  }
+  .falling-heart.flower.flower-light{
+    color:#e8b96a;
+    filter:drop-shadow(0 0 6px rgba(232,185,106,.5));
+  }
+  .falling-heart.flower.flower-deep{
+    color:#b8903a;
+    filter:drop-shadow(0 0 5px rgba(184,144,58,.4));
+  }
 
   .music-btn{
     position:fixed;
@@ -296,6 +332,7 @@
   .invitation{display:none}
   body.invitation-mode .invitation{display:block}
 
+  /* ===== جلد: پاکت‌نامه ===== */
   .cover{
     position:fixed;inset:0;z-index:50;
     display:grid;place-items:center;
@@ -362,14 +399,8 @@
     box-shadow:0 1px 3px rgba(0,0,0,.15), 0 0 0 1px rgba(201,162,74,.2);
   }
 
-  body.letter-up .env-letter{
-    transform:translateY(-85%);
-  }
-
-  body.opened .env-letter{
-    opacity:0;
-    transition:opacity .5s ease;
-  }
+  body.letter-up .env-letter{transform:translateY(-85%)}
+  body.opened .env-letter{opacity:0;transition:opacity .5s ease}
 
   .letter-content{
     display:flex;
@@ -378,11 +409,7 @@
     gap:6px;
   }
 
-  .letter-orn{
-    color:var(--gold);
-    font-size:1rem;
-    line-height:1;
-  }
+  .letter-orn{color:var(--gold);font-size:1rem;line-height:1}
 
   .letter-title{
     font-family:'Amiri',serif;
@@ -460,9 +487,7 @@
     transition:opacity .45s ease;
     pointer-events:none;
   }
-  body.flap-open .env-content{
-    opacity:0;
-  }
+  body.flap-open .env-content{opacity:0}
 
   .env-badge{
     display:inline-block;
@@ -521,11 +546,7 @@
     animation:heartbeat 1.8s ease-in-out infinite;
   }
 
-  .env-sub{
-    font-size:.7rem;
-    color:rgba(243,224,166,.75);
-    letter-spacing:.3px;
-  }
+  .env-sub{font-size:.7rem;color:rgba(243,224,166,.75);letter-spacing:.3px}
 
   .env-hint{
     font-size:.7rem;
@@ -560,10 +581,9 @@
     background:radial-gradient(ellipse at 50% 100%, rgba(201,162,74,.18), transparent 60%);
     pointer-events:none;
   }
-  body.flap-open .env-flap{
-    transform:rotateX(180deg);
-  }
+  body.flap-open .env-flap{transform:rotateX(180deg)}
 
+  /* ===== کارت ===== */
   .card-wrap{
     position:fixed;inset:0;z-index:20;
     display:flex;
@@ -594,10 +614,7 @@
     opacity:0;
     transition:transform 1s cubic-bezier(.19,1,.22,1), opacity .65s ease;
   }
-  body.opened .card{
-    transform:scale(1);
-    opacity:1;
-  }
+  body.opened .card{transform:scale(1);opacity:1}
 
   .card-inner{
     position:relative;
@@ -608,24 +625,54 @@
     background:
       radial-gradient(circle at 50% 0%, rgba(201,162,74,.10), transparent 55%),
       radial-gradient(circle at 50% 100%, rgba(201,162,74,.08), transparent 55%);
+    overflow:hidden;
   }
   .card-inner::before{
     content:'';position:absolute;inset:6px;
     border:1px solid rgba(201,162,74,.28);
     border-radius:6px;pointer-events:none;
+    z-index:1;
   }
 
+  /* =============================================
+     ✿ واترمارک گل بزرگ وسط کارت
+     ============================================= */
+  .watermark-flower{
+    position:absolute;
+    top:50%;
+    left:50%;
+    width:min(92%, 480px);
+    height:auto;
+    aspect-ratio:1;
+    transform:translate(-50%, -50%);
+    color:var(--gold);
+    pointer-events:none;
+    z-index:0;
+    opacity:.7;
+  }
+
+  /* لایه‌ی محتوا بالاتر از واترمارک */
+  .card-inner > *:not(.watermark-flower){
+    position:relative;
+    z-index:2;
+  }
+
+  /* =============================================
+     ✿ گل‌های گوشه‌ی کارت
+     ============================================= */
   .corner{
     position:absolute;
-    width:36px;height:36px;
+    width:46px;
+    height:46px;
     color:var(--gold);
-    opacity:.85;
+    opacity:.9;
     pointer-events:none;
+    z-index:1;
   }
-  .corner.tl{top:10px;left:10px}
-  .corner.tr{top:10px;right:10px;transform:scaleX(-1)}
-  .corner.bl{bottom:10px;left:10px;transform:scaleY(-1)}
-  .corner.br{bottom:10px;right:10px;transform:scale(-1)}
+  .corner.tl{top:8px;left:8px}
+  .corner.tr{top:8px;right:8px;transform:scaleX(-1)}
+  .corner.bl{bottom:8px;left:8px;transform:scaleY(-1)}
+  .corner.br{bottom:8px;right:8px;transform:scale(-1)}
 
   .kicker{font-size:.74rem;color:#b08d4d}
 
@@ -669,19 +716,31 @@
     vertical-align:-.05em;
   }
 
+  /* =============================================
+     ✿ جداکننده‌ها با گل
+     ============================================= */
   .orn{
-    display:flex;align-items:center;justify-content:center;
+    display:flex;
+    align-items:center;
+    justify-content:center;
     gap:10px;
     width:min(100%,220px);
     margin:14px auto;
     color:var(--gold);
   }
   .orn span{
-    flex:1;height:1px;
+    flex:1;
+    height:1px;
     background:linear-gradient(90deg,transparent,rgba(201,162,74,.75),transparent);
   }
-  .orn i{font-style:normal;font-size:.68rem;line-height:1}
+  .orn-flower{
+    width:22px;
+    height:22px;
+    flex:none;
+    color:var(--gold);
+  }
   .orn.small{width:min(100%,140px);margin:16px auto}
+  .orn.small .orn-flower{width:18px;height:18px}
 
   .names{
     display:flex;
@@ -844,11 +903,7 @@
     unicode-bidi:isolate;
   }
 
-  .cd-label{
-    font-size:.66rem;
-    color:#a8894f;
-    letter-spacing:.2px;
-  }
+  .cd-label{font-size:.66rem;color:#a8894f;letter-spacing:.2px}
 
   .event-details{
     margin:24px auto 0;
@@ -893,11 +948,7 @@
     padding-top:18px;
     border-top:1px solid rgba(201,162,74,.35);
   }
-  .c-title{
-    font-size:.72rem;
-    color:#b08d4d;
-    margin-bottom:12px;
-  }
+  .c-title{font-size:.72rem;color:#b08d4d;margin-bottom:12px}
   .c-grid{
     display:flex;
     gap:10px;
@@ -951,7 +1002,11 @@
 
   @media (max-width:380px){
     .card-inner{padding:44px 14px 30px}
-    .corner{width:28px;height:28px}
+    .corner{width:36px;height:36px}
+    .corner.tl{top:6px;left:6px}
+    .corner.tr{top:6px;right:6px}
+    .corner.bl{bottom:6px;left:6px}
+    .corner.br{bottom:6px;right:6px}
     .c-item{min-width:118px;padding:9px 12px}
     .date-row{gap:1px;padding:6px 0}
     .date-cell{padding:4px 1px}
@@ -972,6 +1027,9 @@
     .env-sub{font-size:.62rem}
     .env-hint{font-size:.62rem}
     .env-badge{font-size:.58rem;padding:2px 10px}
+    .watermark-flower{width:88%}
+    .orn-flower{width:18px;height:18px}
+    .orn.small .orn-flower{width:15px;height:15px}
   }
 
   @media (prefers-reduced-motion:reduce){
@@ -1026,7 +1084,7 @@
 <!-- ================== دعوت‌نامه ================== -->
 <div class="invitation" id="invitation">
 
-  <!-- ===== جلد: پاکت‌نامه ===== -->
+  <!-- جلد: پاکت‌نامه -->
   <div class="cover" id="cover" role="button" tabindex="0" aria-label="برای باز کردن نامه کلیک کنید">
     <div class="envelope-scene">
       <div class="envelope">
@@ -1064,39 +1122,91 @@
     </div>
   </div>
 
-  <!-- ===== کارت ===== -->
+  <!-- کارت -->
   <div class="card-wrap">
     <article class="card">
       <div class="card-inner">
 
-        <svg class="corner tl" viewBox="0 0 60 60" aria-hidden="true">
-          <path d="M1 59 V22 C1 10 10 1 22 1 H59" fill="none" stroke="currentColor" stroke-width="1.4"/>
-          <path d="M8 59 V25 C8 15 15 8 25 8 H59" fill="none" stroke="currentColor" stroke-width=".7" opacity=".65"/>
-          <circle cx="22" cy="22" r="3.2" fill="none" stroke="currentColor" stroke-width="1"/>
-          <circle cx="22" cy="22" r="1.1" fill="currentColor"/>
+        <!-- ✿ واترمارک گل بزرگ وسط کارت -->
+        <svg class="watermark-flower" viewBox="0 0 200 200" aria-hidden="true">
+          <g fill="currentColor" fill-opacity="0.045" stroke="currentColor" stroke-width="0.9" stroke-opacity="0.13">
+            <ellipse cx="100" cy="45" rx="28" ry="62"/>
+            <ellipse cx="100" cy="45" rx="28" ry="62" transform="rotate(72 100 100)"/>
+            <ellipse cx="100" cy="45" rx="28" ry="62" transform="rotate(144 100 100)"/>
+            <ellipse cx="100" cy="45" rx="28" ry="62" transform="rotate(216 100 100)"/>
+            <ellipse cx="100" cy="45" rx="28" ry="62" transform="rotate(288 100 100)"/>
+            <circle cx="100" cy="100" r="16" fill="currentColor" fill-opacity="0.07" stroke="none"/>
+            <circle cx="100" cy="100" r="6" fill="currentColor" fill-opacity="0.1" stroke="none"/>
+          </g>
         </svg>
-        <svg class="corner tr" viewBox="0 0 60 60" aria-hidden="true">
-          <path d="M1 59 V22 C1 10 10 1 22 1 H59" fill="none" stroke="currentColor" stroke-width="1.4"/>
-          <path d="M8 59 V25 C8 15 15 8 25 8 H59" fill="none" stroke="currentColor" stroke-width=".7" opacity=".65"/>
-          <circle cx="22" cy="22" r="3.2" fill="none" stroke="currentColor" stroke-width="1"/>
-          <circle cx="22" cy="22" r="1.1" fill="currentColor"/>
+
+        <!-- ✿ گل + پیچک گوشه‌ها -->
+        <svg class="corner tl" viewBox="0 0 70 70" aria-hidden="true">
+          <path d="M2 68 Q 2 36, 36 2" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.85"/>
+          <path d="M10 68 Q 10 44, 44 10" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.5"/>
+          <g transform="translate(19 19)" fill="currentColor" stroke="currentColor" stroke-width="0.9">
+            <ellipse cx="0" cy="-6" rx="3.2" ry="6" fill-opacity="0.14"/>
+            <ellipse cx="0" cy="-6" rx="3.2" ry="6" fill-opacity="0.14" transform="rotate(72)"/>
+            <ellipse cx="0" cy="-6" rx="3.2" ry="6" fill-opacity="0.14" transform="rotate(144)"/>
+            <ellipse cx="0" cy="-6" rx="3.2" ry="6" fill-opacity="0.14" transform="rotate(216)"/>
+            <ellipse cx="0" cy="-6" rx="3.2" ry="6" fill-opacity="0.14" transform="rotate(288)"/>
+            <circle r="2.2" fill-opacity="0.7" stroke="none"/>
+          </g>
         </svg>
-        <svg class="corner bl" viewBox="0 0 60 60" aria-hidden="true">
-          <path d="M1 59 V22 C1 10 10 1 22 1 H59" fill="none" stroke="currentColor" stroke-width="1.4"/>
-          <path d="M8 59 V25 C8 15 15 8 25 8 H59" fill="none" stroke="currentColor" stroke-width=".7" opacity=".65"/>
-          <circle cx="22" cy="22" r="3.2" fill="none" stroke="currentColor" stroke-width="1"/>
-          <circle cx="22" cy="22" r="1.1" fill="currentColor"/>
+        <svg class="corner tr" viewBox="0 0 70 70" aria-hidden="true">
+          <path d="M2 68 Q 2 36, 36 2" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.85"/>
+          <path d="M10 68 Q 10 44, 44 10" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.5"/>
+          <g transform="translate(19 19)" fill="currentColor" stroke="currentColor" stroke-width="0.9">
+            <ellipse cx="0" cy="-6" rx="3.2" ry="6" fill-opacity="0.14"/>
+            <ellipse cx="0" cy="-6" rx="3.2" ry="6" fill-opacity="0.14" transform="rotate(72)"/>
+            <ellipse cx="0" cy="-6" rx="3.2" ry="6" fill-opacity="0.14" transform="rotate(144)"/>
+            <ellipse cx="0" cy="-6" rx="3.2" ry="6" fill-opacity="0.14" transform="rotate(216)"/>
+            <ellipse cx="0" cy="-6" rx="3.2" ry="6" fill-opacity="0.14" transform="rotate(288)"/>
+            <circle r="2.2" fill-opacity="0.7" stroke="none"/>
+          </g>
         </svg>
-        <svg class="corner br" viewBox="0 0 60 60" aria-hidden="true">
-          <path d="M1 59 V22 C1 10 10 1 22 1 H59" fill="none" stroke="currentColor" stroke-width="1.4"/>
-          <path d="M8 59 V25 C8 15 15 8 25 8 H59" fill="none" stroke="currentColor" stroke-width=".7" opacity=".65"/>
-          <circle cx="22" cy="22" r="3.2" fill="none" stroke="currentColor" stroke-width="1"/>
-          <circle cx="22" cy="22" r="1.1" fill="currentColor"/>
+        <svg class="corner bl" viewBox="0 0 70 70" aria-hidden="true">
+          <path d="M2 68 Q 2 36, 36 2" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.85"/>
+          <path d="M10 68 Q 10 44, 44 10" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.5"/>
+          <g transform="translate(19 19)" fill="currentColor" stroke="currentColor" stroke-width="0.9">
+            <ellipse cx="0" cy="-6" rx="3.2" ry="6" fill-opacity="0.14"/>
+            <ellipse cx="0" cy="-6" rx="3.2" ry="6" fill-opacity="0.14" transform="rotate(72)"/>
+            <ellipse cx="0" cy="-6" rx="3.2" ry="6" fill-opacity="0.14" transform="rotate(144)"/>
+            <ellipse cx="0" cy="-6" rx="3.2" ry="6" fill-opacity="0.14" transform="rotate(216)"/>
+            <ellipse cx="0" cy="-6" rx="3.2" ry="6" fill-opacity="0.14" transform="rotate(288)"/>
+            <circle r="2.2" fill-opacity="0.7" stroke="none"/>
+          </g>
+        </svg>
+        <svg class="corner br" viewBox="0 0 70 70" aria-hidden="true">
+          <path d="M2 68 Q 2 36, 36 2" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.85"/>
+          <path d="M10 68 Q 10 44, 44 10" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.5"/>
+          <g transform="translate(19 19)" fill="currentColor" stroke="currentColor" stroke-width="0.9">
+            <ellipse cx="0" cy="-6" rx="3.2" ry="6" fill-opacity="0.14"/>
+            <ellipse cx="0" cy="-6" rx="3.2" ry="6" fill-opacity="0.14" transform="rotate(72)"/>
+            <ellipse cx="0" cy="-6" rx="3.2" ry="6" fill-opacity="0.14" transform="rotate(144)"/>
+            <ellipse cx="0" cy="-6" rx="3.2" ry="6" fill-opacity="0.14" transform="rotate(216)"/>
+            <ellipse cx="0" cy="-6" rx="3.2" ry="6" fill-opacity="0.14" transform="rotate(288)"/>
+            <circle r="2.2" fill-opacity="0.7" stroke="none"/>
+          </g>
         </svg>
 
         <p class="kicker">به نامِ عشق</p>
 
-        <div class="orn"><span></span><i>✦</i><span></span></div>
+        <!-- ✿ جداکننده با گل -->
+        <div class="orn">
+          <span></span>
+          <svg class="orn-flower" viewBox="0 0 30 30" aria-hidden="true">
+            <g fill="currentColor" fill-opacity="0.18" stroke="currentColor" stroke-width="0.9">
+              <ellipse cx="15" cy="8" rx="3" ry="5.5"/>
+              <ellipse cx="15" cy="8" rx="3" ry="5.5" transform="rotate(72 15 15)"/>
+              <ellipse cx="15" cy="8" rx="3" ry="5.5" transform="rotate(144 15 15)"/>
+              <ellipse cx="15" cy="8" rx="3" ry="5.5" transform="rotate(216 15 15)"/>
+              <ellipse cx="15" cy="8" rx="3" ry="5.5" transform="rotate(288 15 15)"/>
+              <circle cx="15" cy="15" r="2" fill="currentColor" fill-opacity="0.7" stroke="none"/>
+            </g>
+          </svg>
+          <span></span>
+        </div>
 
         <div class="guest-block" id="guestBlock">
           <p class="greeting" id="cardGreeting"></p>
@@ -1110,7 +1220,21 @@
         </h1>
         <p class="families">شخم‌گر &nbsp;•&nbsp; کاویان‌پور</p>
 
-        <div class="orn"><span></span><i>✦</i><span></span></div>
+        <!-- ✿ جداکننده با گل -->
+        <div class="orn">
+          <span></span>
+          <svg class="orn-flower" viewBox="0 0 30 30" aria-hidden="true">
+            <g fill="currentColor" fill-opacity="0.18" stroke="currentColor" stroke-width="0.9">
+              <ellipse cx="15" cy="8" rx="3" ry="5.5"/>
+              <ellipse cx="15" cy="8" rx="3" ry="5.5" transform="rotate(72 15 15)"/>
+              <ellipse cx="15" cy="8" rx="3" ry="5.5" transform="rotate(144 15 15)"/>
+              <ellipse cx="15" cy="8" rx="3" ry="5.5" transform="rotate(216 15 15)"/>
+              <ellipse cx="15" cy="8" rx="3" ry="5.5" transform="rotate(288 15 15)"/>
+              <circle cx="15" cy="15" r="2" fill="currentColor" fill-opacity="0.7" stroke="none"/>
+            </g>
+          </svg>
+          <span></span>
+        </div>
 
         <p class="poem">
           می‌گویند عشق را نمی‌یابند، می‌سازند<br>
@@ -1119,7 +1243,21 @@
           تو را برگزیدم... و جهان با من آمد
         </p>
 
-        <div class="orn small"><span></span><i>♥</i><span></span></div>
+        <!-- ✿ جداکننده‌ی کوچک با گل -->
+        <div class="orn small">
+          <span></span>
+          <svg class="orn-flower" viewBox="0 0 30 30" aria-hidden="true">
+            <g fill="currentColor" fill-opacity="0.22" stroke="currentColor" stroke-width="0.9">
+              <ellipse cx="15" cy="8" rx="3" ry="5.5"/>
+              <ellipse cx="15" cy="8" rx="3" ry="5.5" transform="rotate(72 15 15)"/>
+              <ellipse cx="15" cy="8" rx="3" ry="5.5" transform="rotate(144 15 15)"/>
+              <ellipse cx="15" cy="8" rx="3" ry="5.5" transform="rotate(216 15 15)"/>
+              <ellipse cx="15" cy="8" rx="3" ry="5.5" transform="rotate(288 15 15)"/>
+              <circle cx="15" cy="15" r="2" fill="currentColor" fill-opacity="0.7" stroke="none"/>
+            </g>
+          </svg>
+          <span></span>
+        </div>
 
         <div class="date-section">
           <p class="date-title">آذر ۱۴۰۵</p>
@@ -1304,58 +1442,104 @@
   }
 
   /* =============================================
-     🌧️ بارش قلب روی صفحه‌ی اصلی (بعد از باز شدن)
+     ❤️ ✿ بارش قلب و گل — روی کارت
      ============================================= */
   var heartsLayer = document.getElementById('hearts');
   var heartsRunning = false;
+
+  /* قالب SVG گل */
+  var FLOWER_SVG =
+    '<svg viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg">' +
+      '<g fill="currentColor" fill-opacity="0.28" stroke="currentColor" stroke-width="0.9">' +
+        '<ellipse cx="15" cy="8" rx="3" ry="6"/>' +
+        '<ellipse cx="15" cy="8" rx="3" ry="6" transform="rotate(72 15 15)"/>' +
+        '<ellipse cx="15" cy="8" rx="3" ry="6" transform="rotate(144 15 15)"/>' +
+        '<ellipse cx="15" cy="8" rx="3" ry="6" transform="rotate(216 15 15)"/>' +
+        '<ellipse cx="15" cy="8" rx="3" ry="6" transform="rotate(288 15 15)"/>' +
+        '<circle cx="15" cy="15" r="2" fill="currentColor" fill-opacity="0.85" stroke="none"/>' +
+      '</g>' +
+    '</svg>';
 
   function startHeartRain() {
     if (heartsRunning) return;
     if (!heartsLayer) return;
     heartsRunning = true;
 
-    var shapes = ['♥', '♥', '♥', '❤', '❥'];
-    var colors = ['', '', '', 'gold', 'light', 'dark'];
+    /* ❤️ شکل‌های قلب */
+    var heartShapes = ['♥', '♥', '♥', '❤', '❥'];
+
+    /* رنگ‌های قلب */
+    var heartColors = ['heart-red', 'heart-red', 'heart-light', 'heart-gold', 'heart-pale'];
+
+    /* رنگ‌های گل */
+    var flowerColors = ['', 'flower-light', 'flower-deep'];
 
     function drop() {
       if (document.hidden) return;
 
-      var h = document.createElement('span');
-      h.className = 'falling-heart';
+      var el = document.createElement('span');
+      el.className = 'falling-heart';
 
-      var colorClass = colors[(Math.random() * colors.length) | 0];
-      if (colorClass) h.classList.add(colorClass);
+      /* ۳۵٪ گل، ۶۵٪ قلب */
+      var isFlower = Math.random() < 0.35;
 
-      h.textContent = shapes[(Math.random() * shapes.length) | 0];
+      var size, duration;
 
-      var size = 12 + Math.random() * 22;
-      var duration = 6 + Math.random() * 7;
-      var drift = (Math.random() * 100 - 50).toFixed(1) + 'px';
-      var rotation = (120 + Math.random() * 220).toFixed(0) + 'deg';
-      var delay = Math.random() * 0.6;
+      if (isFlower) {
+        /* گل */
+        var fc = flowerColors[(Math.random() * flowerColors.length) | 0];
+        el.classList.add('flower');
+        if (fc) el.classList.add(fc);
 
-      h.style.left = (Math.random() * 100) + '%';
-      h.style.fontSize = size.toFixed(1) + 'px';
-      h.style.animationDuration = duration.toFixed(2) + 's';
-      h.style.animationDelay = delay.toFixed(2) + 's';
-      h.style.setProperty('--drift', drift);
-      h.style.setProperty('--rot', rotation);
-      h.style.opacity = (0.55 + Math.random() * 0.35).toFixed(2);
+        el.innerHTML = FLOWER_SVG;
 
-      heartsLayer.appendChild(h);
+        size = 18 + Math.random() * 22;         /* ۱۸ تا ۴۰ */
+        duration = 8 + Math.random() * 8;       /* ۸ تا ۱۶ ثانیه */
+        el.style.width = size.toFixed(1) + 'px';
+        el.style.height = size.toFixed(1) + 'px';
+
+      } else {
+        /* قلب */
+        var hc = heartColors[(Math.random() * heartColors.length) | 0];
+        el.classList.add(hc);
+
+        el.textContent = heartShapes[(Math.random() * heartShapes.length) | 0];
+
+        size = 12 + Math.random() * 20;         /* ۱۲ تا ۳۲ */
+        duration = 6 + Math.random() * 7;       /* ۶ تا ۱۳ ثانیه */
+        el.style.fontSize = size.toFixed(1) + 'px';
+        el.style.lineHeight = '1';
+      }
+
+      var drift = (Math.random() * 120 - 60).toFixed(1) + 'px';
+      var rotation = (140 + Math.random() * 220).toFixed(0) + 'deg';
+      var delay = Math.random() * 0.5;
+
+      el.style.left = (Math.random() * 100) + '%';
+      el.style.animationDuration = duration.toFixed(2) + 's';
+      el.style.animationDelay = delay.toFixed(2) + 's';
+      el.style.setProperty('--drift', drift);
+      el.style.setProperty('--rot', rotation);
+
+      /* فقط برای قلب‌ها opacity تصادفی — گل‌ها از stroke استفاده می‌کنند */
+      if (!isFlower) {
+        el.style.opacity = (0.55 + Math.random() * 0.35).toFixed(2);
+      }
+
+      heartsLayer.appendChild(el);
 
       setTimeout(function () {
-        h.remove();
+        el.remove();
       }, (duration + delay + 0.5) * 1000);
     }
 
-    /* بارش اولیه سریع */
-    for (var i = 0; i < 8; i++) {
-      setTimeout(drop, i * 120);
+    /* بارش اولیه */
+    for (var i = 0; i < 7; i++) {
+      setTimeout(drop, i * 140);
     }
 
     /* سپس دوره‌ای */
-    setInterval(drop, 380);
+    setInterval(drop, 420);
   }
 
   /* =============================================
@@ -1371,21 +1555,21 @@
 
       if (!userMuted) playMusic();
 
-      /* مرحله ۱: باز شدن فلپ */
+      /* ۱: باز شدن فلپ */
       document.body.classList.add('flap-open');
 
-      /* مرحله ۲: بیرون آمدن نامه */
+      /* ۲: بیرون آمدن نامه */
       setTimeout(function () {
         document.body.classList.add('letter-up');
       }, 500);
 
-      /* مرحله ۳: ظاهر شدن کارت + شروع بارش قلب */
+      /* ۳: ظاهر شدن کارت + شروع بارش قلب/گل */
       setTimeout(function () {
         document.body.classList.add('opened');
         startHeartRain();
       }, 1300);
 
-      /* مرحله ۴: پنهان کردن کامل جلد */
+      /* ۴: پنهان کردن جلد */
       setTimeout(function () {
         cover.style.display = 'none';
       }, 2100);
