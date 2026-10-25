@@ -444,30 +444,36 @@
     transform:rotate(-33deg);
   }
 
+  /* =========================================
+     محتوای روی پاکت — چیدمان جدید
+     مهر بالا → دعوت‌نامه و نام مهمان وسط → راهنما پایین
+     ========================================= */
   .env-content{
     position:absolute;
-    top:48%;
+    top:44%;              /* شروع پایین‌تر (قبلاً ۴۸%) */
     left:18px;
     right:18px;
-    bottom:14px;
+    bottom:12px;
     z-index:4;
     display:flex;
     flex-direction:column;
     align-items:center;
     justify-content:space-evenly;
     text-align:center;
-    gap:6px;
+    gap:10px;             /* فاصله‌ی بیشتر بین بخش‌ها */
     transition:opacity .45s ease;
     pointer-events:none;
   }
   body.flap-open .env-content{opacity:0}
 
+  /* بخش نام مهمان و نشان — حالا پایین‌تر از مهر */
   .env-top{
     display:flex;
     flex-direction:column;
     align-items:center;
     gap:8px;
     width:100%;
+    margin-top:6px;       /* یکم فاصله از مهر */
   }
 
   .env-badge{
@@ -505,13 +511,16 @@
     display:inline-block;
   }
 
-  /* ✦ مهر و موم قلبی */
+  /* =========================================
+     ✦ مهر و موم قلبی — بالاتر، کوچک‌تر
+     ========================================= */
   .wax-seal{
-    width:clamp(82px, 24vw, 104px);
+    width:clamp(66px, 18vw, 82px);   /* کوچک‌تر از قبل (بود 82-104) */
     aspect-ratio:1;
-    filter:drop-shadow(0 5px 14px rgba(0,0,0,.65)) drop-shadow(0 0 22px rgba(201,162,74,.3));
-    margin:2px auto;
+    filter:drop-shadow(0 4px 12px rgba(0,0,0,.65)) drop-shadow(0 0 18px rgba(201,162,74,.3));
+    margin:0 auto 4px;
     animation:sealPulse 3.6s ease-in-out infinite;
+    flex:none;
   }
   .wax-seal svg{
     width:100%;
@@ -520,11 +529,11 @@
   }
   @keyframes sealPulse{
     0%,100%{
-      filter:drop-shadow(0 5px 14px rgba(0,0,0,.65)) drop-shadow(0 0 22px rgba(201,162,74,.3));
+      filter:drop-shadow(0 4px 12px rgba(0,0,0,.65)) drop-shadow(0 0 18px rgba(201,162,74,.3));
       transform:scale(1);
     }
     50%{
-      filter:drop-shadow(0 5px 14px rgba(0,0,0,.65)) drop-shadow(0 0 32px rgba(201,162,74,.55));
+      filter:drop-shadow(0 4px 12px rgba(0,0,0,.65)) drop-shadow(0 0 26px rgba(201,162,74,.55));
       transform:scale(1.04);
     }
   }
@@ -533,6 +542,7 @@
     font-size:.7rem;
     color:rgba(243,224,166,.72);
     animation:pulseHint 2.4s ease-in-out infinite;
+    margin-top:4px;
   }
   @keyframes pulseHint{
     0%,100%{opacity:.5}
@@ -992,14 +1002,14 @@
     .cd-num{font-size:1rem}
     .cd-label{font-size:.58rem}
     .countdown-title{font-size:.82rem}
-    .env-content{top:46%;bottom:10px;left:14px;right:14px;gap:4px}
+    .env-content{top:42%;bottom:10px;left:14px;right:14px;gap:6px}
     .env-greet{font-size:.78rem}
     .env-hint{font-size:.62rem}
     .env-badge{font-size:.58rem;padding:2px 10px}
     .watermark-flower{width:88%}
     .orn-flower{width:18px;height:18px}
     .orn.small .orn-flower{width:15px;height:15px}
-    .wax-seal{width:76px}
+    .wax-seal{width:58px}
   }
 
   @media (prefers-reduced-motion:reduce){
@@ -1054,14 +1064,13 @@
 <!-- ================== دعوت‌نامه ================== -->
 <div class="invitation" id="invitation">
 
-  <!-- جلد: پاکت‌نامه با مهر و موم قلبی -->
+  <!-- جلد: پاکت‌نامه -->
   <div class="cover" id="cover" role="button" tabindex="0" aria-label="برای باز کردن نامه کلیک کنید">
     <div class="envelope-scene">
       <div class="envelope">
 
         <div class="env-back"></div>
 
-        <!-- نامه (بدون نام) -->
         <div class="env-letter" id="envLetter">
           <div class="letter-content">
             <span class="letter-orn">✦</span>
@@ -1073,14 +1082,13 @@
 
         <div class="env-front"></div>
 
-        <!-- محتوای روی پاکت: نشان + نام مهمان + مهر قلبی + راهنما -->
+        <!-- ==========================================
+             محتوای روی پاکت
+             چیدمان جدید: مهر بالا → نام و نشان پایین‌تر
+             ========================================== -->
         <div class="env-content">
-          <div class="env-top">
-            <span class="env-badge">دعوت‌نامه</span>
-            <p class="env-greet" id="envGreet"></p>
-          </div>
 
-          <!-- ✦ مهر و موم قلبی (جای نام عروس و داماد) -->
+          <!-- ✦ مهر و موم قلبی — حالا بالا -->
           <div class="wax-seal" aria-hidden="true">
             <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
               <defs>
@@ -1097,21 +1105,16 @@
                 </radialGradient>
               </defs>
 
-              <!-- بیرونی‌ترین لبه (سایه) -->
               <circle cx="50" cy="50" r="48" fill="#4a3709" opacity="0.35"/>
 
-              <!-- حلقه‌ی موم بیرونی -->
               <circle cx="50" cy="50" r="47" fill="url(#sealOuter)"/>
 
-              <!-- حلقه‌ی تزئینی -->
               <circle cx="50" cy="50" r="43" fill="none" stroke="rgba(60,40,10,.45)" stroke-width="0.8"/>
               <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(255,240,200,.3)" stroke-width="0.6" stroke-dasharray="1.5 2.5"/>
 
-              <!-- سطح داخلی (اثر مهر) -->
               <circle cx="50" cy="50" r="38" fill="url(#sealInner)"/>
               <circle cx="50" cy="50" r="38" fill="none" stroke="rgba(90,65,20,.5)" stroke-width="1"/>
 
-              <!-- قلب برجسته -->
               <path d="M50 69
                        C 38 57, 28 49, 28 40
                        C 28 33, 34 28, 40 28
@@ -1122,7 +1125,6 @@
                     fill="#8a6a24"
                     opacity="0.65"/>
 
-              <!-- هایلایت روی قلب -->
               <path d="M50 65
                        C 40 55, 33 48, 33 41
                        C 33 37, 36 33, 40 33"
@@ -1131,6 +1133,12 @@
                     stroke-width="1.4"
                     stroke-linecap="round"/>
             </svg>
+          </div>
+
+          <!-- بخش پایین‌تر: نشان دعوت‌نامه + نام مهمان -->
+          <div class="env-top">
+            <span class="env-badge">دعوت‌نامه</span>
+            <p class="env-greet" id="envGreet"></p>
           </div>
 
           <div class="env-hint">برای باز کردن نامه لمس کنید ✦</div>
@@ -1147,7 +1155,6 @@
     <article class="card">
       <div class="card-inner">
 
-        <!-- واترمارک گل بزرگ -->
         <svg class="watermark-flower" viewBox="0 0 200 200" aria-hidden="true">
           <g fill="currentColor" fill-opacity="0.045" stroke="currentColor" stroke-width="0.9" stroke-opacity="0.13">
             <ellipse cx="100" cy="45" rx="28" ry="62"/>
@@ -1457,7 +1464,6 @@
     setInterval(spawn, 900);
   }
 
-  /* ❤️ ✿ بارش قلب و گل روی کارت */
   var heartsLayer = document.getElementById('hearts');
   var heartsRunning = false;
 
@@ -1538,7 +1544,6 @@
     setInterval(drop, 420);
   }
 
-  /* باز کردن پاکت */
   function initInvitation() {
     var cover = document.getElementById('cover');
     var opened = false;
@@ -1574,7 +1579,6 @@
     });
   }
 
-  /* شمارش معکوس */
   function initCountdown() {
     var target = new Date('2026-12-11T18:00:00+03:30').getTime();
 
