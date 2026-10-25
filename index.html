@@ -1346,4 +1346,51 @@
 
     genBtn.addEventListener('click', generate);
 
-    input.addEventListener('
+    input.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        generate();
+      }
+    });
+
+    copyBtn.addEventListener('click', function () {
+      var text = linkOutput.value;
+      if (!text) return;
+
+      var done = function (ok) {
+        var orig = copyBtn.textContent;
+        copyBtn.textContent = ok ? 'کپی شد ✓' : 'خطا';
+        setTimeout(function () { copyBtn.textContent = orig; }, 1800);
+      };
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(
+          function () { done(true); },
+          function () { fallbackCopy(text, done); }
+        );
+      } else {
+        fallbackCopy(text, done);
+      }
+    });
+
+    function fallbackCopy(text, cb) {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.top = '0';
+      ta.style.left = '0';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      var ok = false;
+      try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+      ta.remove();
+      cb(ok);
+    }
+  }
+})();
+</script>
+
+</body>
+</html>
