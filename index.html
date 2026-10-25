@@ -33,7 +33,6 @@
   body.admin-mode{overflow-y:auto;overflow-x:hidden}
   body.invitation-mode{overflow:hidden;height:100vh}
 
-  /* ============ ذرات درخشان پس‌زمینه ============ */
   .sparkles{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:1}
   .sparkle{
     position:absolute;
@@ -53,15 +52,12 @@
     100%{transform:translateY(-108vh) scale(1.15) rotate(200deg);opacity:0}
   }
 
-  /* =============================================
-     ❤️ بارش قلب و گل — حالا روی کارت (z-index 25)
-     ============================================= */
   .hearts{
     position:fixed;
     inset:0;
     overflow:hidden;
     pointer-events:none;
-    z-index:25;                      /* بالاتر از کارت (20) */
+    z-index:25;
     opacity:0;
     transition:opacity 1.2s ease .3s;
   }
@@ -94,34 +90,16 @@
     }
   }
 
-  /* رنگ‌های قلب */
-  .falling-heart.heart-red{
-    color:#c0392b;
-    filter:drop-shadow(0 0 6px rgba(192,57,43,.4));
-  }
-  .falling-heart.heart-light{
-    color:#e74c3c;
-    filter:drop-shadow(0 0 7px rgba(231,76,60,.5));
-  }
-  .falling-heart.heart-gold{
-    color:#c9a24a;
-    filter:drop-shadow(0 0 7px rgba(201,162,74,.5));
-  }
-  .falling-heart.heart-pale{
-    color:#f3e0a6;
-    filter:drop-shadow(0 0 6px rgba(243,224,166,.55));
-  }
+  .falling-heart.heart-red{color:#c0392b;filter:drop-shadow(0 0 6px rgba(192,57,43,.4))}
+  .falling-heart.heart-light{color:#e74c3c;filter:drop-shadow(0 0 7px rgba(231,76,60,.5))}
+  .falling-heart.heart-gold{color:#c9a24a;filter:drop-shadow(0 0 7px rgba(201,162,74,.5))}
+  .falling-heart.heart-pale{color:#f3e0a6;filter:drop-shadow(0 0 6px rgba(243,224,166,.55))}
 
-  /* گل‌های شناور */
   .falling-heart.flower{
     color:var(--gold);
     filter:drop-shadow(0 0 5px rgba(201,162,74,.35));
   }
-  .falling-heart.flower svg{
-    width:100%;
-    height:100%;
-    display:block;
-  }
+  .falling-heart.flower svg{width:100%;height:100%;display:block}
   .falling-heart.flower.flower-light{
     color:#e8b96a;
     filter:drop-shadow(0 0 6px rgba(232,185,106,.5));
@@ -406,32 +384,26 @@
     display:flex;
     flex-direction:column;
     align-items:center;
-    gap:6px;
+    gap:8px;
   }
 
   .letter-orn{color:var(--gold);font-size:1rem;line-height:1}
 
   .letter-title{
     font-family:'Amiri',serif;
-    font-size:clamp(.85rem,3.3vw,1.05rem);
+    font-size:clamp(.9rem,3.5vw,1.1rem);
     color:#b08d4d;
     font-weight:700;
-    letter-spacing:1px;
-  }
-
-  .letter-names{
-    font-family:'Amiri',serif;
-    font-size:clamp(1.1rem,4.2vw,1.4rem);
-    color:var(--gold-d);
-    font-weight:700;
-    line-height:1.4;
+    letter-spacing:2px;
   }
 
   .letter-heart{
     color:var(--red-heart);
-    font-size:.7em;
+    font-size:1.15rem;
+    line-height:1;
     display:inline-block;
     animation:heartbeat 1.8s ease-in-out infinite;
+    filter:drop-shadow(0 0 8px rgba(192,57,43,.35));
   }
 
   .env-front{
@@ -474,20 +446,29 @@
 
   .env-content{
     position:absolute;
-    top:50%;
-    left:20px;
-    right:20px;
-    bottom:16px;
+    top:48%;
+    left:18px;
+    right:18px;
+    bottom:14px;
     z-index:4;
     display:flex;
     flex-direction:column;
     align-items:center;
     justify-content:space-evenly;
     text-align:center;
+    gap:6px;
     transition:opacity .45s ease;
     pointer-events:none;
   }
   body.flap-open .env-content{opacity:0}
+
+  .env-top{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:8px;
+    width:100%;
+  }
 
   .env-badge{
     display:inline-block;
@@ -504,7 +485,7 @@
     display:none;
     font-family:'Amiri',serif;
     font-weight:700;
-    font-size:clamp(.85rem,3.6vw,1rem);
+    font-size:clamp(.9rem,3.8vw,1.05rem);
     color:#f9ecc4;
     margin:0 auto;
     line-height:1.6;
@@ -524,29 +505,29 @@
     display:inline-block;
   }
 
-  .env-names{
-    font-family:'Amiri',serif;
-    font-weight:700;
-    font-size:clamp(1.3rem,6.2vw,1.8rem);
-    line-height:1.2;
-    color:var(--gold-l);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:.35em;
-    text-shadow:0 0 22px rgba(243,224,166,.4);
+  /* ✦ مهر و موم قلبی */
+  .wax-seal{
+    width:clamp(82px, 24vw, 104px);
+    aspect-ratio:1;
+    filter:drop-shadow(0 5px 14px rgba(0,0,0,.65)) drop-shadow(0 0 22px rgba(201,162,74,.3));
+    margin:2px auto;
+    animation:sealPulse 3.6s ease-in-out infinite;
   }
-
-  .env-heart{
-    font-size:.68em;
-    color:#e8b96a;
-    display:inline-block;
-    line-height:1;
-    text-shadow:0 0 18px rgba(232,185,106,.7);
-    animation:heartbeat 1.8s ease-in-out infinite;
+  .wax-seal svg{
+    width:100%;
+    height:100%;
+    display:block;
   }
-
-  .env-sub{font-size:.7rem;color:rgba(243,224,166,.75);letter-spacing:.3px}
+  @keyframes sealPulse{
+    0%,100%{
+      filter:drop-shadow(0 5px 14px rgba(0,0,0,.65)) drop-shadow(0 0 22px rgba(201,162,74,.3));
+      transform:scale(1);
+    }
+    50%{
+      filter:drop-shadow(0 5px 14px rgba(0,0,0,.65)) drop-shadow(0 0 32px rgba(201,162,74,.55));
+      transform:scale(1.04);
+    }
+  }
 
   .env-hint{
     font-size:.7rem;
@@ -634,9 +615,6 @@
     z-index:1;
   }
 
-  /* =============================================
-     ✿ واترمارک گل بزرگ وسط کارت
-     ============================================= */
   .watermark-flower{
     position:absolute;
     top:50%;
@@ -651,15 +629,11 @@
     opacity:.7;
   }
 
-  /* لایه‌ی محتوا بالاتر از واترمارک */
   .card-inner > *:not(.watermark-flower){
     position:relative;
     z-index:2;
   }
 
-  /* =============================================
-     ✿ گل‌های گوشه‌ی کارت
-     ============================================= */
   .corner{
     position:absolute;
     width:46px;
@@ -716,9 +690,6 @@
     vertical-align:-.05em;
   }
 
-  /* =============================================
-     ✿ جداکننده‌ها با گل
-     ============================================= */
   .orn{
     display:flex;
     align-items:center;
@@ -1021,15 +992,14 @@
     .cd-num{font-size:1rem}
     .cd-label{font-size:.58rem}
     .countdown-title{font-size:.82rem}
-    .env-content{top:52%;bottom:12px;left:14px;right:14px}
-    .env-names{font-size:1.2rem}
+    .env-content{top:46%;bottom:10px;left:14px;right:14px;gap:4px}
     .env-greet{font-size:.78rem}
-    .env-sub{font-size:.62rem}
     .env-hint{font-size:.62rem}
     .env-badge{font-size:.58rem;padding:2px 10px}
     .watermark-flower{width:88%}
     .orn-flower{width:18px;height:18px}
     .orn.small .orn-flower{width:15px;height:15px}
+    .wax-seal{width:76px}
   }
 
   @media (prefers-reduced-motion:reduce){
@@ -1084,35 +1054,85 @@
 <!-- ================== دعوت‌نامه ================== -->
 <div class="invitation" id="invitation">
 
-  <!-- جلد: پاکت‌نامه -->
+  <!-- جلد: پاکت‌نامه با مهر و موم قلبی -->
   <div class="cover" id="cover" role="button" tabindex="0" aria-label="برای باز کردن نامه کلیک کنید">
     <div class="envelope-scene">
       <div class="envelope">
 
         <div class="env-back"></div>
 
+        <!-- نامه (بدون نام) -->
         <div class="env-letter" id="envLetter">
           <div class="letter-content">
             <span class="letter-orn">✦</span>
             <p class="letter-title">دعوت‌نامه</p>
-            <p class="letter-names">
-              حسن <span class="letter-heart">♥</span> ملیکا
-            </p>
+            <span class="letter-heart">♥</span>
             <span class="letter-orn">✦</span>
           </div>
         </div>
 
         <div class="env-front"></div>
 
+        <!-- محتوای روی پاکت: نشان + نام مهمان + مهر قلبی + راهنما -->
         <div class="env-content">
-          <span class="env-badge">دعوت‌نامه</span>
-          <p class="env-greet" id="envGreet"></p>
-          <div class="env-names">
-            <span>حسن</span>
-            <span class="env-heart" aria-hidden="true">♥</span>
-            <span>ملیکا</span>
+          <div class="env-top">
+            <span class="env-badge">دعوت‌نامه</span>
+            <p class="env-greet" id="envGreet"></p>
           </div>
-          <div class="env-sub">شخم‌گر &nbsp;•&nbsp; کاویان‌پور</div>
+
+          <!-- ✦ مهر و موم قلبی (جای نام عروس و داماد) -->
+          <div class="wax-seal" aria-hidden="true">
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <radialGradient id="sealOuter" cx="35%" cy="30%" r="80%">
+                  <stop offset="0%" stop-color="#f9ecc4"/>
+                  <stop offset="30%" stop-color="#dfb95c"/>
+                  <stop offset="70%" stop-color="#a8842f"/>
+                  <stop offset="100%" stop-color="#5e4612"/>
+                </radialGradient>
+                <radialGradient id="sealInner" cx="50%" cy="42%" r="65%">
+                  <stop offset="0%" stop-color="#f0d98c"/>
+                  <stop offset="70%" stop-color="#c9a24a"/>
+                  <stop offset="100%" stop-color="#9d7a2a"/>
+                </radialGradient>
+              </defs>
+
+              <!-- بیرونی‌ترین لبه (سایه) -->
+              <circle cx="50" cy="50" r="48" fill="#4a3709" opacity="0.35"/>
+
+              <!-- حلقه‌ی موم بیرونی -->
+              <circle cx="50" cy="50" r="47" fill="url(#sealOuter)"/>
+
+              <!-- حلقه‌ی تزئینی -->
+              <circle cx="50" cy="50" r="43" fill="none" stroke="rgba(60,40,10,.45)" stroke-width="0.8"/>
+              <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(255,240,200,.3)" stroke-width="0.6" stroke-dasharray="1.5 2.5"/>
+
+              <!-- سطح داخلی (اثر مهر) -->
+              <circle cx="50" cy="50" r="38" fill="url(#sealInner)"/>
+              <circle cx="50" cy="50" r="38" fill="none" stroke="rgba(90,65,20,.5)" stroke-width="1"/>
+
+              <!-- قلب برجسته -->
+              <path d="M50 69
+                       C 38 57, 28 49, 28 40
+                       C 28 33, 34 28, 40 28
+                       C 44 28, 47 30, 50 35
+                       C 53 30, 56 28, 60 28
+                       C 66 28, 72 33, 72 40
+                       C 72 49, 62 57, 50 69 Z"
+                    fill="#8a6a24"
+                    opacity="0.65"/>
+
+              <!-- هایلایت روی قلب -->
+              <path d="M50 65
+                       C 40 55, 33 48, 33 41
+                       C 33 37, 36 33, 40 33"
+                    fill="none"
+                    stroke="rgba(249,236,196,.6)"
+                    stroke-width="1.4"
+                    stroke-linecap="round"/>
+            </svg>
+          </div>
+
           <div class="env-hint">برای باز کردن نامه لمس کنید ✦</div>
         </div>
 
@@ -1127,7 +1147,7 @@
     <article class="card">
       <div class="card-inner">
 
-        <!-- ✿ واترمارک گل بزرگ وسط کارت -->
+        <!-- واترمارک گل بزرگ -->
         <svg class="watermark-flower" viewBox="0 0 200 200" aria-hidden="true">
           <g fill="currentColor" fill-opacity="0.045" stroke="currentColor" stroke-width="0.9" stroke-opacity="0.13">
             <ellipse cx="100" cy="45" rx="28" ry="62"/>
@@ -1140,7 +1160,6 @@
           </g>
         </svg>
 
-        <!-- ✿ گل + پیچک گوشه‌ها -->
         <svg class="corner tl" viewBox="0 0 70 70" aria-hidden="true">
           <path d="M2 68 Q 2 36, 36 2" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.85"/>
           <path d="M10 68 Q 10 44, 44 10" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.5"/>
@@ -1192,7 +1211,6 @@
 
         <p class="kicker">به نامِ عشق</p>
 
-        <!-- ✿ جداکننده با گل -->
         <div class="orn">
           <span></span>
           <svg class="orn-flower" viewBox="0 0 30 30" aria-hidden="true">
@@ -1220,7 +1238,6 @@
         </h1>
         <p class="families">شخم‌گر &nbsp;•&nbsp; کاویان‌پور</p>
 
-        <!-- ✿ جداکننده با گل -->
         <div class="orn">
           <span></span>
           <svg class="orn-flower" viewBox="0 0 30 30" aria-hidden="true">
@@ -1243,7 +1260,6 @@
           تو را برگزیدم... و جهان با من آمد
         </p>
 
-        <!-- ✿ جداکننده‌ی کوچک با گل -->
         <div class="orn small">
           <span></span>
           <svg class="orn-flower" viewBox="0 0 30 30" aria-hidden="true">
@@ -1441,13 +1457,10 @@
     setInterval(spawn, 900);
   }
 
-  /* =============================================
-     ❤️ ✿ بارش قلب و گل — روی کارت
-     ============================================= */
+  /* ❤️ ✿ بارش قلب و گل روی کارت */
   var heartsLayer = document.getElementById('hearts');
   var heartsRunning = false;
 
-  /* قالب SVG گل */
   var FLOWER_SVG =
     '<svg viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg">' +
       '<g fill="currentColor" fill-opacity="0.28" stroke="currentColor" stroke-width="0.9">' +
@@ -1465,13 +1478,8 @@
     if (!heartsLayer) return;
     heartsRunning = true;
 
-    /* ❤️ شکل‌های قلب */
     var heartShapes = ['♥', '♥', '♥', '❤', '❥'];
-
-    /* رنگ‌های قلب */
     var heartColors = ['heart-red', 'heart-red', 'heart-light', 'heart-gold', 'heart-pale'];
-
-    /* رنگ‌های گل */
     var flowerColors = ['', 'flower-light', 'flower-deep'];
 
     function drop() {
@@ -1480,33 +1488,24 @@
       var el = document.createElement('span');
       el.className = 'falling-heart';
 
-      /* ۳۵٪ گل، ۶۵٪ قلب */
       var isFlower = Math.random() < 0.35;
-
       var size, duration;
 
       if (isFlower) {
-        /* گل */
         var fc = flowerColors[(Math.random() * flowerColors.length) | 0];
         el.classList.add('flower');
         if (fc) el.classList.add(fc);
-
         el.innerHTML = FLOWER_SVG;
-
-        size = 18 + Math.random() * 22;         /* ۱۸ تا ۴۰ */
-        duration = 8 + Math.random() * 8;       /* ۸ تا ۱۶ ثانیه */
+        size = 18 + Math.random() * 22;
+        duration = 8 + Math.random() * 8;
         el.style.width = size.toFixed(1) + 'px';
         el.style.height = size.toFixed(1) + 'px';
-
       } else {
-        /* قلب */
         var hc = heartColors[(Math.random() * heartColors.length) | 0];
         el.classList.add(hc);
-
         el.textContent = heartShapes[(Math.random() * heartShapes.length) | 0];
-
-        size = 12 + Math.random() * 20;         /* ۱۲ تا ۳۲ */
-        duration = 6 + Math.random() * 7;       /* ۶ تا ۱۳ ثانیه */
+        size = 12 + Math.random() * 20;
+        duration = 6 + Math.random() * 7;
         el.style.fontSize = size.toFixed(1) + 'px';
         el.style.lineHeight = '1';
       }
@@ -1521,7 +1520,6 @@
       el.style.setProperty('--drift', drift);
       el.style.setProperty('--rot', rotation);
 
-      /* فقط برای قلب‌ها opacity تصادفی — گل‌ها از stroke استفاده می‌کنند */
       if (!isFlower) {
         el.style.opacity = (0.55 + Math.random() * 0.35).toFixed(2);
       }
@@ -1533,18 +1531,14 @@
       }, (duration + delay + 0.5) * 1000);
     }
 
-    /* بارش اولیه */
     for (var i = 0; i < 7; i++) {
       setTimeout(drop, i * 140);
     }
 
-    /* سپس دوره‌ای */
     setInterval(drop, 420);
   }
 
-  /* =============================================
-     باز کردن پاکت — انیمیشن مرحله‌ای
-     ============================================= */
+  /* باز کردن پاکت */
   function initInvitation() {
     var cover = document.getElementById('cover');
     var opened = false;
@@ -1555,21 +1549,17 @@
 
       if (!userMuted) playMusic();
 
-      /* ۱: باز شدن فلپ */
       document.body.classList.add('flap-open');
 
-      /* ۲: بیرون آمدن نامه */
       setTimeout(function () {
         document.body.classList.add('letter-up');
       }, 500);
 
-      /* ۳: ظاهر شدن کارت + شروع بارش قلب/گل */
       setTimeout(function () {
         document.body.classList.add('opened');
         startHeartRain();
       }, 1300);
 
-      /* ۴: پنهان کردن جلد */
       setTimeout(function () {
         cover.style.display = 'none';
       }, 2100);
@@ -1584,9 +1574,7 @@
     });
   }
 
-  /* =============================================
-     شمارش معکوس
-     ============================================= */
+  /* شمارش معکوس */
   function initCountdown() {
     var target = new Date('2026-12-11T18:00:00+03:30').getTime();
 
