@@ -446,34 +446,61 @@
 
   /* =========================================
      محتوای روی پاکت — چیدمان جدید
-     مهر بالا → دعوت‌نامه و نام مهمان وسط → راهنما پایین
+     مهر و بقیه بالاتر، فاصله‌ی بیشتر از پایین
      ========================================= */
   .env-content{
     position:absolute;
-    top:44%;              /* شروع پایین‌تر (قبلاً ۴۸%) */
+    top:30%;              /* خیلی بالاتر از قبل (بود ۴۴٪) */
     left:18px;
     right:18px;
-    bottom:12px;
+    bottom:8px;
     z-index:4;
     display:flex;
     flex-direction:column;
     align-items:center;
-    justify-content:space-evenly;
+    justify-content:flex-start;   /* از بالا شروع کن */
     text-align:center;
-    gap:10px;             /* فاصله‌ی بیشتر بین بخش‌ها */
+    gap:0;
     transition:opacity .45s ease;
     pointer-events:none;
   }
   body.flap-open .env-content{opacity:0}
 
-  /* بخش نام مهمان و نشان — حالا پایین‌تر از مهر */
+  /* =========================================
+     ✦ مهر و موم قلبی — بالاتر
+     ========================================= */
+  .wax-seal{
+    width:clamp(66px, 18vw, 82px);
+    aspect-ratio:1;
+    filter:drop-shadow(0 4px 12px rgba(0,0,0,.65)) drop-shadow(0 0 18px rgba(201,162,74,.3));
+    margin:0 auto 14px;    /* فاصله‌ی بیشتر از محتوای زیرش */
+    animation:sealPulse 3.6s ease-in-out infinite;
+    flex:none;
+  }
+  .wax-seal svg{
+    width:100%;
+    height:100%;
+    display:block;
+  }
+  @keyframes sealPulse{
+    0%,100%{
+      filter:drop-shadow(0 4px 12px rgba(0,0,0,.65)) drop-shadow(0 0 18px rgba(201,162,74,.3));
+      transform:scale(1);
+    }
+    50%{
+      filter:drop-shadow(0 4px 12px rgba(0,0,0,.65)) drop-shadow(0 0 26px rgba(201,162,74,.55));
+      transform:scale(1.04);
+    }
+  }
+
+  /* گروه نشان + نام مهمان — نزدیک مهر */
   .env-top{
     display:flex;
     flex-direction:column;
     align-items:center;
     gap:8px;
     width:100%;
-    margin-top:6px;       /* یکم فاصله از مهر */
+    margin-top:0;
   }
 
   .env-badge{
@@ -511,50 +538,26 @@
     display:inline-block;
   }
 
-  /* =========================================
-     ✦ مهر و موم قلبی — بالاتر، کوچک‌تر
-     ========================================= */
-  .wax-seal{
-    width:clamp(66px, 18vw, 82px);   /* کوچک‌تر از قبل (بود 82-104) */
-    aspect-ratio:1;
-    filter:drop-shadow(0 4px 12px rgba(0,0,0,.65)) drop-shadow(0 0 18px rgba(201,162,74,.3));
-    margin:0 auto 4px;
-    animation:sealPulse 3.6s ease-in-out infinite;
-    flex:none;
-  }
-  .wax-seal svg{
-    width:100%;
-    height:100%;
-    display:block;
-  }
-  @keyframes sealPulse{
-    0%,100%{
-      filter:drop-shadow(0 4px 12px rgba(0,0,0,.65)) drop-shadow(0 0 18px rgba(201,162,74,.3));
-      transform:scale(1);
-    }
-    50%{
-      filter:drop-shadow(0 4px 12px rgba(0,0,0,.65)) drop-shadow(0 0 26px rgba(201,162,74,.55));
-      transform:scale(1.04);
-    }
-  }
-
+  /* راهنما — چسبیده به پایین پاکت */
   .env-hint{
     font-size:.7rem;
     color:rgba(243,224,166,.72);
     animation:pulseHint 2.4s ease-in-out infinite;
-    margin-top:4px;
+    margin-top:auto;       /* به پایین هل بده */
+    margin-bottom:2px;
   }
   @keyframes pulseHint{
     0%,100%{opacity:.5}
     50%{opacity:1}
   }
 
+  /* فلپ کوتاه‌تر شد تا محتوای بالا دیده شود */
   .env-flap{
     position:absolute;
     top:0;
     left:0;
     right:0;
-    height:42%;
+    height:36%;              /* بود ۴۲٪ → الان ۳۶٪ */
     z-index:5;
     clip-path:polygon(0 0, 100% 0, 50% 100%);
     background:linear-gradient(180deg,#2a6154 0%,#1e4d40 55%,#173c32 100%);
@@ -1002,14 +1005,15 @@
     .cd-num{font-size:1rem}
     .cd-label{font-size:.58rem}
     .countdown-title{font-size:.82rem}
-    .env-content{top:42%;bottom:10px;left:14px;right:14px;gap:6px}
+    .env-content{top:30%;bottom:6px;left:14px;right:14px}
     .env-greet{font-size:.78rem}
     .env-hint{font-size:.62rem}
     .env-badge{font-size:.58rem;padding:2px 10px}
     .watermark-flower{width:88%}
     .orn-flower{width:18px;height:18px}
     .orn.small .orn-flower{width:15px;height:15px}
-    .wax-seal{width:58px}
+    .wax-seal{width:58px;margin-bottom:10px}
+    .env-flap{height:32%}
   }
 
   @media (prefers-reduced-motion:reduce){
@@ -1083,12 +1087,12 @@
         <div class="env-front"></div>
 
         <!-- ==========================================
-             محتوای روی پاکت
-             چیدمان جدید: مهر بالا → نام و نشان پایین‌تر
+             محتوای روی پاکت — چیدمان جدید
+             مهر و محتوا بالاتر، راهنما چسبیده به پایین
              ========================================== -->
         <div class="env-content">
 
-          <!-- ✦ مهر و موم قلبی — حالا بالا -->
+          <!-- ✦ مهر و موم قلبی — بالاتر -->
           <div class="wax-seal" aria-hidden="true">
             <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
               <defs>
@@ -1135,12 +1139,13 @@
             </svg>
           </div>
 
-          <!-- بخش پایین‌تر: نشان دعوت‌نامه + نام مهمان -->
+          <!-- نشان دعوت‌نامه + نام مهمان -->
           <div class="env-top">
             <span class="env-badge">دعوت‌نامه</span>
             <p class="env-greet" id="envGreet"></p>
           </div>
 
+          <!-- راهنما — پایین پاکت -->
           <div class="env-hint">برای باز کردن نامه لمس کنید ✦</div>
         </div>
 
